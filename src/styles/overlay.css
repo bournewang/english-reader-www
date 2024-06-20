@@ -36,23 +36,6 @@
     /* border: 1px solid black; */
 }
 
-#toggle-bilingual, #read-article-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    color: white;
-    background-color: #007bff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-#toggle-bilingual:hover {
-    background-color: #0056b3;
-}
-.bilingual-status.active {
-    background-color: #28a745;
-}
 
 #close-btn {
     position: absolute;

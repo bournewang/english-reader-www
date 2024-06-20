@@ -1,4 +1,5 @@
 import { useState } from "react"
+import "~styles/tailwind.css"
 
 function IndexPopup() {
   const [data, setData] = useState("")
@@ -17,11 +18,9 @@ const toggleReaderMode = () => {
         display: "flex",
         flexDirection: "column",
         padding: 16,
-        width: "100px"
+        width: "15em"
       }}>
-      {/* <h1>English Reader</h1> */}
-      <button onClick={toggleReaderMode}>Open Reader Mode</button>
-      {/* <footer>Crafted by @PlasmoHQ</footer> */}
+      <button onClick={toggleReaderMode} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">Reader Mode</button>
     </div>
   )
 }

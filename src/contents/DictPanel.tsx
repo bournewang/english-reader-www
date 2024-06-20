@@ -29,7 +29,7 @@ const DictPanel = ({ word, detail }) => {
                 )}
                 {definition.example && (
                   <p className="example">
-                    <button className="example-speech-button" data-example-index={definitionIndex}>🔊</button>
+                    <span className="speaker-icon" data-example-index={definitionIndex}>🔊</span>
                     {definition.example}
                   </p>
                 )}

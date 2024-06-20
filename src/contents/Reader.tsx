@@ -3,17 +3,21 @@ import DictWrap from "./DictWrap";
 import { fetchDefinition } from "~api/dict";
 import { translateText } from "~api/translate";
 import { speakText } from "~api/tts"
-import "../styles/overlay.css"
+import "~styles/overlay.css"
+import "~styles/tailwind.css"
 
 const Reader = ({ onClose }) => {
     const [word, setWord] = useState(false);
     const [definition, setDefinition] = useState(false);
     const [bilingualMode, setBilingualMode] = useState(false);
+    const [hint, setHint] = useState(true)
     //   const shadowRoot = useContext(ShadowRootContext);
 
     useEffect(() => {
         const articleElement = document.querySelector("article");
         const contentDiv = document.getElementById("main-article-content");
+        if (!contentDiv) return
+
         if (articleElement) {
             const clonedArticle = articleElement.cloneNode(true);
             const paragraphs = clonedArticle.querySelectorAll("p");
@@ -25,9 +29,10 @@ const Reader = ({ onClose }) => {
                 speakerIcon.style.cursor = "pointer";
                 speakerIcon.style.marginLeft = "10px";
                 paragraph.appendChild(speakerIcon);
-        
+
             });
-            contentDiv.appendChild(clonedArticle);
+            if (contentDiv)
+                contentDiv.appendChild(clonedArticle);
         } else {
             contentDiv.innerHTML = "<p>No article content found.</p>";
         }
@@ -41,16 +46,17 @@ const Reader = ({ onClose }) => {
                 console.log(definition);
                 setWord(selectedWord);
                 setDefinition(definition[0]);
+                setHint(false)
             }
         };
 
         const handleClick = (e) => {
             if (e.target.classList.contains("speaker-icon")) {
-              const paragraph = e.target.parentElement;
-              const paragraphText = paragraph.innerText.replace(e.target.innerText, ''); // Exclude the speaker icon text
-              speakText(paragraphText)
+                const paragraph = e.target.parentElement;
+                const paragraphText = paragraph.innerText.replace(e.target.innerText, ''); // Exclude the speaker icon text
+                speakText(paragraphText)
             }
-          };
+        };
 
         document.getElementById("main-article-content").addEventListener("dblclick", handleDoubleClick);
         document.getElementById("main-article-content").addEventListener("click", handleClick);
@@ -82,23 +88,15 @@ const Reader = ({ onClose }) => {
         translationParagraphs.forEach((translationNode) => {
             translationNode.style.display = newMode ? "block" : "none";
         });
-
-        const button = document.querySelector("#toggle-bilingual");
-        if (newMode) {
-            button.classList.add("active");
-        } else {
-            button.classList.remove("active");
-        }
-
     };
 
     const readArticle = () => {
         const articleText = Array.from(document.querySelectorAll("#main-article-content .origin"))
-          .map(paragraph => paragraph.innerText)
-          .join(" ");
-        speakText(articleText.replaceAll('🔊', '')  );
+            .map(paragraph => paragraph.innerText)
+            .join(" ");
+        speakText(articleText.replaceAll('🔊', ''));
         // window.speechSynthesis.speak(speech);
-      };
+    };
 
     return (
         <div id="reader-overlay">
@@ -106,14 +104,27 @@ const Reader = ({ onClose }) => {
                 <div id="main-article-content"></div>
             </div>
             <div id="sidebar">
-                <div id="controls-section">
-                    <button onClick={toggleBilingualMode} id="toggle-bilingual">
-                        {bilingualMode ? "Disable Bilingual Mode" : "Enable Bilingual Mode"}
+                <div id="controls-section" className="flex items-center space-x-4">
+                    <button onClick={readArticle} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">
+                        Read Article 🔊
                     </button>
-                    <button id="read-article-button" onClick={readArticle}>
-                        Read Article
-                    </button>
+
+                    <label className="inline-flex items-center cursor-pointer">
+                        <input
+                            type="checkbox"
+                            value=""
+                            className="sr-only peer"
+                            onChange={toggleBilingualMode}
+                        />
+                        <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                        <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Bilingual Mode</span>
+                    </label>                   
                 </div>
+                <hr />
+                { hint && 
+                <div className="mt-2 bg-blue-100 border border-blue-200 text-sm text-blue-800 rounded-lg p-4 dark:bg-blue-800/10 dark:border-blue-900 dark:text-blue-500" role="alert">
+                    <span className="font-bold">Info</span> Double-click any word in the article to see its definition and details here.
+                    </div>}
                 <DictWrap word={word} detail={definition} />
             </div>
             <button id="close-btn" onClick={onClose}>❌</button>
