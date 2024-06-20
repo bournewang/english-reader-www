@@ -1,24 +1,29 @@
-let synthesizer;
-let SpeechSDK =null;
-function initializeSpeechSDK() {
-    if (typeof SpeechSDK === 'undefined') {
-        console.error('SpeechSDK is not defined');
-        return;
-    }
+import '~jsbrowserpackageraw.js';
 
-    const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(process.env.TTS_API_KET, process.env.TTS_LOCATION);
-    speechConfig.speechSynthesisVoiceName = "en-US-JennyNeural";
-    const audioConfig = SpeechSDK.AudioConfig.fromDefaultSpeakerOutput();
-    synthesizer = new SpeechSDK.SpeechSynthesizer(speechConfig, audioConfig);
-    console.log("Speech SDK Initialized");
+export class SpeechSynthesizerSingleton {
+    private static instance: any;
+
+    private constructor() { }
+
+    public static getInstance() {
+        if (!SpeechSynthesizerSingleton.instance) {
+            const sdk = window.SpeechSDK;
+            const subscriptionKey = process.env.PLASMO_PUBLIC_TTS_API_KEY;
+            const location = process.env.PLASMO_PUBLIC_TTS_LOCATION;        
+
+            if (sdk && subscriptionKey && location) {
+                const speechConfig = sdk.SpeechConfig.fromSubscription(subscriptionKey, location);
+                SpeechSynthesizerSingleton.instance = new sdk.SpeechSynthesizer(speechConfig);
+            } else {
+                throw new Error("Failed to initialize the speech SDK or environment variables are not set");
+            }
+        }
+        return SpeechSynthesizerSingleton.instance;
+    }
 }
 
-// Function to handle speech synthesis
 export function speakText(text) {
-    if (!synthesizer) {
-        console.error('Speech SDK not initialized');
-        return;
-    }
+    const synthesizer = SpeechSynthesizerSingleton.getInstance();
 
     synthesizer.speakTextAsync(
         text,
