@@ -5,6 +5,8 @@ import { translateText } from "~api/translate";
 import { speakText } from "~api/tts"
 import { fetchMainArticleContent } from "~api/helper";
 import Loading from "./Loading";
+import { addArticle } from "~api/article";
+import { addLookingWord } from "~api/lookingWord";
 import "~styles/overlay.css"
 import "~styles/tailwind.css"
 
@@ -13,7 +15,7 @@ const Reader = ({ onClose }) => {
     const [definition, setDefinition] = useState(false);
     const [bilingualMode, setBilingualMode] = useState(false);
     const [hint, setHint] = useState(true)
-    const [article, setArticle] = useState({ title: null, paragraphs: [], translations: [] })
+    const [article, setArticle] = useState({ id: null, title: null, paragraphs: [], translations: [] })
     const [translating, setTranslating] = useState([])
     const [looking, setLooking] = useState(false)
 
@@ -22,6 +24,20 @@ const Reader = ({ onClose }) => {
         setArticle(articleContent)
         const contentDiv = document.getElementById("main-article-content");
         if (!contentDiv) return
+
+        // add article
+        const createArticle = async() => {
+            let {title, paragraphs} = articleContent
+            console.log("call addArticle: ")
+            const response = await addArticle(title, paragraphs)
+            if (response.success) {
+                console.log(response.data) 
+                setArticle(response.data)
+            }else{
+                console.log("ERROR: ")
+            }
+        }
+        createArticle()
 
         const handleDoubleClick = async (e) => {
             const selectedWord = window.getSelection().toString().trim();
@@ -33,6 +49,12 @@ const Reader = ({ onClose }) => {
                     setDefinition(result[0]);
                     setLooking(false)
                     setHint(false)
+
+                    // add looking word
+                    // articleId
+                    const paragraphId = e.target.parentElement.dataset.paragraphId
+                    const articleId = e.target.parentElement.dataset.articleId
+                    addLookingWord(selectedWord, articleId, paragraphId)
                 }
             }
         };
@@ -91,8 +113,9 @@ const Reader = ({ onClose }) => {
                     <div className="prose prose-lg mx-auto my-2 p-6 bg-white rounded-lg shadow-lg">
                         <h1 className="text-3xl font-bold mb-4">{article.title} </h1>
                         {/* <p className="text-gray-700 mb-4"></p> */}
-                        {article && article.paragraphs && article.paragraphs.map((paragraph, index) => (
-                            <div key={index}>
+                        {/* {article && article.paragraphs && article.paragraphs.map((paragraph, index) => ( */}
+                        {article.paragraphs && Object.entries(article.paragraphs).map(([index, paragraph]) => (    
+                            <div key={index} data-article-id={article.id} data-paragraph-id={index}>
                                 {/* origin paragraph */}
                                 <p className="mb-4 text-gray-800 origin">
                                     {paragraph}<span className="speaker-icon">🔊</span>

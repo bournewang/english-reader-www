@@ -1,3 +1,5 @@
+import axios, { AxiosRequestConfig } from 'axios';
+
 export function fetchMainArticleElement() {
     // Check for common semantic tags
     const commonTags = ['article', 'main', 'section'];
@@ -51,8 +53,41 @@ export function fetchMainArticleContent()
     const articleElement = fetchMainArticleElement()
     const ps = articleElement.querySelectorAll("p");
     let paragraphs = []
+    let i = 1
     ps.forEach((p) => {
-        paragraphs.push(p.innerText)
+        paragraphs[i++] = p.innerText
     })
     return {title: document.title, paragraphs, translations: []}
 }
+
+const BASE_API_URL = process.env.PLASMO_PUBLIC_BASE_API_URL;
+
+const getToken = async (): Promise<string> => {
+    return new Promise((resolve, reject) => {
+        chrome.storage.local.get(["token"], (result) => {
+            if (chrome.runtime.lastError) {
+                return reject(chrome.runtime.lastError);
+            }
+            resolve(result.token);
+        });
+    });
+};
+
+export const apiRequest = async (url: string, method: 'GET' | 'POST', data?: any): Promise<any> => {
+    try {
+        const token = await getToken();
+        if (!token) {
+            throw new Error('Token is not set. Please log in.');
+        }        
+        const config: AxiosRequestConfig = {
+            method,
+            url: `${BASE_API_URL}${url}`,
+            headers: { Authorization: `Bearer ${token}` },
+            data,
+        };
+        const response = await axios(config);
+        return response.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+};
