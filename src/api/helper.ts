@@ -1,4 +1,4 @@
-export function fetchMainContent() {
+export function fetchMainArticleElement() {
     // Check for common semantic tags
     const commonTags = ['article', 'main', 'section'];
     for (const tag of commonTags) {
@@ -43,4 +43,16 @@ export function fetchMainContent() {
     }
 
     return largestElement; // Return the largest text block element
+}
+
+
+export function fetchMainArticleContent()
+{
+    const articleElement = fetchMainArticleElement()
+    const ps = articleElement.querySelectorAll("p");
+    let paragraphs = []
+    ps.forEach((p) => {
+        paragraphs.push(p.innerText)
+    })
+    return {title: document.title, paragraphs, translations: []}
 }

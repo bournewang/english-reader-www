@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import DictPanel from "./DictPanel";
 import { speakText } from "~api/tts";
 
-const DictWrap = ({ word, detail }) => {
+const DictWrap = ({ detail }) => {
     const sidebarRef = useRef(null);
     const shadowRootRef = useRef(null);
 
@@ -13,12 +13,12 @@ const DictWrap = ({ word, detail }) => {
 
             const style = document.createElement("style");
             style.textContent = `
-                #details-section {padding: 5px; background-color: #eee;color: #000;}
+                #details-section {margin-top: 5px; padding: 5px; background-color: #eee;color: #000;}
                 .phonetics p {margin: 5px 0;}
                 .partOfSpeech {font-weight: bold;}
                 .example {font-style: italic;color: darkcyan;}
                 .phonetic-speaker-icon, .speaker-icon {cursor: pointer;}
-                h2 {font-size: 2em; font-weight: bold;color: darkcyan;}
+                h2 {font-size: 2em; margin: 0; font-weight: bold;color: darkcyan;}
                 .phonetics {display: flex;margin-top: .5em;}
                 .phonetic-speaker-icon {cursor: pointer; display: inline-block; margin-left: 10px;font-size: 18px;}
                 .hidden-audio {display: none;}
@@ -47,7 +47,7 @@ const DictWrap = ({ word, detail }) => {
 
     return (
         <div ref={sidebarRef} id="">
-            {shadowRootRef.current && createPortal(<DictPanel word={word} detail={detail} />, shadowRootRef.current)}
+            {shadowRootRef.current && createPortal(<DictPanel detail={detail} />, shadowRootRef.current)}
         </div>
     );
 };

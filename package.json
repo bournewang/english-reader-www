@@ -7,11 +7,13 @@
   "scripts": {
     "dev": "plasmo dev",
     "build": "plasmo build",
+    "build:css": "npx tailwindcss -i tailwind.css -o src/styles/tailwind.css",
     "package": "plasmo package"
   },
   "dependencies": {
     "@headlessui/react": "^2.0.4",
     "@heroicons/react": "^2.1.4",
+    "@tailwindcss/typography": "^0.5.13",
     "plasmo": "0.87.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",

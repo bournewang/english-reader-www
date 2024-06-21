@@ -1,11 +1,11 @@
 import React, { useState } from "react"
 
-const DictPanel = ({ word, detail }) => {
+const DictPanel = ({ detail }) => {
   return (
-    <div id="details-section">
-      <h2>{word}</h2>
+    detail && <div id="details-section">
+      <h2>{detail.word}</h2>
       <div className="phonetics">
-        {detail && detail.phonetics && detail.phonetics.length > 0 && detail.phonetics.map((phonetic, index) => (
+        {detail.phonetics && detail.phonetics.length > 0 && detail.phonetics.map((phonetic, index) => (
           <p key={index}>
             {phonetic.text}
             {phonetic.audio && (
@@ -17,9 +17,9 @@ const DictPanel = ({ word, detail }) => {
           </p>
         ))}
       </div>
-      {detail && detail.meanings && detail.meanings.length > 0 && detail.meanings.map((meaning, meaningIndex) => (
+      {detail.meanings && detail.meanings.length > 0 && detail.meanings.map((meaning, meaningIndex) => (
         <div className="meaning" key={meaningIndex}>
-          <p className="partOfSpeech">{meaning.partOfSpeech}: {word}</p>
+          <p className="partOfSpeech">{meaning.partOfSpeech}: {detail.word}</p>
           <ol>
             {meaning.definitions.map((definition, definitionIndex) => (
               <li key={definitionIndex}>
@@ -39,7 +39,7 @@ const DictPanel = ({ word, detail }) => {
         </div>
       ))
       }
-      {detail && detail.sourceUrls && detail.sourceUrls.length > 0 && (
+      {detail.sourceUrls && detail.sourceUrls.length > 0 && (
         <div className="sourceUrl">
           <strong>Source:</strong>
           <ul>
