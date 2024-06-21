@@ -1,3 +1,6 @@
+plasmo-csui{
+    display: none;
+}
 #reader-overlay {
     position: fixed;
     top: 0;
@@ -52,14 +55,14 @@ p.origin {
     display: flex;
     align-items: center;
     justify-content: space-between;
-  }
-  
-  .speaker-icon {
+}
+
+.speaker-icon {
     cursor: pointer;
     margin-left: 10px;
     flex-shrink: 0;
-  }
-  
+}
+
 
 /* 
 #controls-section {

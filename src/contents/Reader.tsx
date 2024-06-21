@@ -3,6 +3,7 @@ import DictWrap from "./DictWrap";
 import { fetchDefinition } from "~api/dict";
 import { translateText } from "~api/translate";
 import { speakText } from "~api/tts"
+import { fetchMainContent } from "~api/helper";
 import "~styles/overlay.css"
 import "~styles/tailwind.css"
 
@@ -14,7 +15,7 @@ const Reader = ({ onClose }) => {
     //   const shadowRoot = useContext(ShadowRootContext);
 
     useEffect(() => {
-        const articleElement = document.querySelector("article");
+        const articleElement = fetchMainContent()
         const contentDiv = document.getElementById("main-article-content");
         if (!contentDiv) return
 
