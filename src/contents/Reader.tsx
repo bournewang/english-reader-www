@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import DictWrap from "./DictWrap";
 import { fetchDefinition } from "~api/dict";
 import { translateText } from "~api/translate";

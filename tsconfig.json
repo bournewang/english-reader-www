@@ -7,7 +7,7 @@
     ".plasmo/index.d.ts",
     "./**/*.ts",
     "./**/*.tsx"
-  ],
+, "src/api/user.js"  ],
   "compilerOptions": {
     "paths": {
       "~*": [

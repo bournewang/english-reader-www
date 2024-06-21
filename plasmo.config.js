@@ -11,5 +11,10 @@ module.exports = {
         resources: ["styles/overlay.css"],
         matches: ["<all_urls>"]
       }
+    ],
+    permissions: [
+        "storage",
+        "activeTab",
+        "scripting"
     ]
   }
