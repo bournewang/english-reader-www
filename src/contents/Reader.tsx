@@ -4,7 +4,7 @@ import { fetchDefinition } from "~api/dict";
 import { translateText } from "~api/translate";
 import { speakText } from "~api/tts"
 import { fetchMainArticleContent } from "~api/helper";
-import Loading from "./Loading";
+import Loading from "~components/Loading";
 import { addArticle } from "~api/article";
 import { addLookingWord } from "~api/lookingWord";
 import "~styles/overlay.css"

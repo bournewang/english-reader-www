@@ -1,5 +1,6 @@
 import React, { useState, FormEvent } from 'react';
 import { registerUser } from '~api/user';
+import "~styles/tailwind.css"
 
 const Register: React.FC = () => {
     const [email, setEmail] = useState<string>('');

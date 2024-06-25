@@ -1,6 +1,5 @@
 import { useState } from "react"
-
-// import "./style.css"
+import "~styles/tailwind.css"
 
 function IndexNewtab() {
   const [data, setData] = useState("")

@@ -1,24 +1,28 @@
 {
-  "name": "english-reader-plasmo",
-  "displayName": "English reader plasmo",
-  "version": "0.1",
-  "description": "Article reader for English learners.",
-  "author": "Plasmo Corp. <foss@plasmo.com>",
+  "name": "english-reader",
+  "displayName": "English Reader",
+  "version": "0.8.61",
+  "description": "Enhance english article reading experience with TTS, bilingual mode, and looking up dictionary.",
+  "author": "Wang Xiaopei <xiaopei0206@icloud.com>",
   "scripts": {
     "dev": "plasmo dev",
-    "build": "plasmo build",
+    "build": "plasmo build && npm run zip",
+    "zip": "cd build/chrome-mv3-prod && zip -r english-reader.zip . && mv english-reader.zip ~/Downloads",
     "build:css": "npx tailwindcss -i tailwind.css -o src/styles/tailwind.css",
     "package": "plasmo package"
   },
   "dependencies": {
     "@headlessui/react": "^2.0.4",
     "@heroicons/react": "^2.1.4",
+    "@react-navigation/native": "^6.1.17",
+    "@react-navigation/native-stack": "^6.9.26",
     "@tailwindcss/typography": "^0.5.13",
-    "axios": "^1.7.2",
     "plasmo": "0.87.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-router-dom": "^6.23.1",
+    "react-native-safe-area-context": "^4.10.5",
+    "react-native-screens": "^3.32.0",
+    "react-router-dom": "latest",
     "tailwindcss": "^3.4.4"
   },
   "devDependencies": {
@@ -38,7 +42,20 @@
       "https://*/*"
     ],
     "permissions": [
-      "tabs", "storage"
+      "activeTab",
+      "storage"
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": [
+          "styles/overlay.css",
+          "styles/tailwind.css",
+          "contents/login.html"
+        ],
+        "matches": [
+          "<all_urls>"
+        ]
+      }
     ]
   }
 }
