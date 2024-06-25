@@ -86,7 +86,8 @@ const Reader = ({ selectedArticle }) => {
 
   const highlightText = (text) => {
     const words = text.split(' ');
-    const words_list = Object.values(article.looking_words);
+    // const words_list = Object.values(article.looking_words);
+    const words_list = article.looking_words != null ? Object.values(article.looking_words) : [];
     return words.map((word, index) => {
       const cleanWord = word.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "").toLowerCase();
       console.log("word %s -> %s", word, cleanWord);

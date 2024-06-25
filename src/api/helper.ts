@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
+import { addArticle } from './article';
 
 export function fetchMainArticleElement() {
     // Check for common semantic tags
@@ -55,9 +56,14 @@ export function fetchMainArticleContent()
     let paragraphs = []
     let i = 1
     ps.forEach((p) => {
-        paragraphs[i++] = p.innerText
+        paragraphs[(i++).toString()] = p.innerText
     })
     return {title: document.title, paragraphs, translations: []}
+}
+
+export function addArticleFromDocument(){
+    const article = fetchMainArticleContent()
+    return addArticle(article.title, article.paragraphs)
 }
 
 const BASE_API_URL = process.env.PLASMO_PUBLIC_BASE_API_URL;

@@ -2,7 +2,7 @@
 // import IndexPopup from './IndexPopup';
 import { AuthProvider } from '~contexts/AuthContext';
 import "~styles/tailwind.css"
-import React, { useContext } from 'react';
+import React from 'react';
 import {useAuth} from './contexts/AuthContext';
 
 function IndexPopup() {
@@ -57,8 +57,6 @@ function IndexPopup() {
     </div>
   );
 }
-
-// export default IndexPopup;
 
 function App() {
   return (

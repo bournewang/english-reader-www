@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-// import Home from '~Home';
 import Login from '~components/Login'
 import Dashboard from '~components/Dashboard';
-// import History from '~Page1';
 import History from '~components/History';
 import Page2 from '~Page2';
 import Page3 from '~Page3';
