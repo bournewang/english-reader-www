@@ -49,7 +49,8 @@ function IndexPopup() {
       
         <button
           onClick={openLoginPage}
-          className="text-gray-500 hover:text-gray-700 font-bold cursor-pointer underline"
+        //   className="text-gray-500 hover:text-gray-700 font-bold cursor-pointer underline"
+            className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
         >
           {email ? "History" : ("Login / Register")}
         </button>
