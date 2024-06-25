@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getArticles } from '~api/article';
+import Reader from '~components/Reader';
 
 const History = () => {
   const [articles, setArticles] = useState([]);
@@ -17,12 +18,13 @@ const History = () => {
   }, []);
 
   const handleArticleClick = (article) => {
+    console.log("set article: ", article.title)
     setSelectedArticle(article);
   };
 
   return (
     <div className="flex">
-      <div className="w-1/3 p-4 bg-white shadow-lg">
+      <div className="w-1/5 p-4 bg-white shadow-lg">
         <h2 className="text-2xl font-bold mb-4">Articles</h2>
         <ul className="space-y-2">
           {articles && articles.length > 0 ? (
@@ -37,16 +39,11 @@ const History = () => {
           )}
         </ul>
       </div>
-      <div className="w-2/3 p-4">
+      <div className="w-4/5">
         {selectedArticle ? (
-          <div>
-            <h2 className="text-2xl font-bold mb-4">{selectedArticle.title}</h2>
-            <div className="space-y-4">
-              {selectedArticle.paragraphs && Object.values(selectedArticle.paragraphs).map((paragraph, index) => (
-                <p key={index} className="text-gray-800">{paragraph}</p>
-              ))}
-            </div>
-          </div>
+          // <div>
+            <Reader selectedArticle={selectedArticle}/>
+          // </div>
         ) : (
           <div className="text-gray-500">Select an article to view its content</div>
         )}

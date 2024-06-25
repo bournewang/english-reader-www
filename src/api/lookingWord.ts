@@ -7,3 +7,7 @@ export const addLookingWord = async (word: string, articleId: number, paragraphI
 export const getLookingWords = async () => {
     return apiRequest('/looking_word/get', 'GET');
 };
+
+export const getLookingWordsByArticle = async (articleId: number) => {
+    return apiRequest('/looking_word/get/by_article/'+articleId, 'GET');
+};

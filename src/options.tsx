@@ -40,7 +40,7 @@ function OptionsPage() {
               </ul>
             </nav>
             <div className="flex-1">
-              <main className="p-4">
+              <main className="p-2">
                 {path === "/my" && <Dashboard />}
                 {path === "/history" && <History />}
                 {path === "/page2" && <Page2 />}

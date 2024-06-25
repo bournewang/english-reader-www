@@ -1,9 +1,13 @@
 import React from "react"
 import { createRoot } from "react-dom/client"
-import Reader from "./Reader"
+import Reader from "~components/Reader"
+// import Reader from "./Reader"
+import Register from "~components/Register"
+import { fetchMainArticleContent } from "~api/helper"
+import { getArticle } from "~api/article"
 // import "../styles/overlay.css"
 
-const createReader = () => {
+const createReader = async() => {
     const overlay = document.getElementById("english-reader-overlay")
     if (!overlay) {
         const overlay = document.createElement("div")
@@ -30,8 +34,19 @@ const createReader = () => {
             overlay.style.display = "none"
         }
 
+        // const article = fetchMainArticleContent()
+        const response = await getArticle(9)
+        const article = response.data
+        console.log(article)
+
         const root = createRoot(overlay)
-        root.render(<Reader onClose={hideReader} />)
+        root.render(
+            // <Register/>
+            <Reader 
+                selectedArticle={article} 
+                // onClose={hideReader} 
+                />
+            )
         return
     }
 
