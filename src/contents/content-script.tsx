@@ -4,10 +4,11 @@ import Reader from "~components/Reader";
 import { fetchMainArticleContent, addArticleFromDocument } from "~api/helper";
 import { AuthProvider, useAuth } from "~contexts/AuthContext";
 import "~styles/tailwind.css";
+import {collectArticleInfo} from "~api/helper";
 
 const ReaderApp = ({ }) => {
     const { email } = useAuth();
-    const [article, setArticle] = useState({ title: String, paragraphs: {}, translations: [], looking_words: [] });
+    const [article, setArticle] = useState({ title: String, paragraphs: {}, translations: [], unfamiliar_words: [] });
 
     console.log("email: ", email);
     useEffect(() => {
@@ -64,5 +65,9 @@ const createReader = async () => {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "toggle-reader-mode") {
         createReader();
+
+        // Example usage
+        const articleInfo = collectArticleInfo();
+        console.log(articleInfo);
     }
 });

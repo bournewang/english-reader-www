@@ -58,7 +58,7 @@ export function fetchMainArticleContent()
     ps.forEach((p) => {
         paragraphs[(i++).toString()] = p.innerText
     })
-    return {title: document.title, paragraphs, translations: [], looking_words: []}
+    return {title: document.title, paragraphs, translations: [], unfamiliar_words: []}
 }
 
 export function addArticleFromDocument(){
@@ -97,3 +97,41 @@ export const apiRequest = async (url: string, method: 'GET' | 'POST', data?: any
         throw error.response;
     }
 };
+
+
+
+function getMetaContentByName(name) {
+    const meta = document.querySelector(`meta[name='${name}']`);
+    return meta ? meta.getAttribute('content') : null;
+}
+
+function getMetaContentByProperty(property) {
+    const meta = document.querySelector(`meta[property='${property}']`);
+    return meta ? meta.getAttribute('content') : null;
+}
+
+export function collectArticleInfo() {
+    // Collect the URL
+    const url = window.location.href;
+
+    // Collect the author (assuming it's stored in a meta tag)
+    let author = getMetaContentByName('author') || getMetaContentByProperty('article:author') || null;
+
+    // Collect the site name (assuming it's stored in a meta tag or can be derived from the document title)
+    let siteName = getMetaContentByProperty('og:site_name') || document.title;
+
+    // Collect the site icon (assuming it's stored in a link tag with rel='icon')
+    let siteIcon = document.querySelector("link[rel~='icon']") ? document.querySelector("link[rel~='icon']").href : null;
+
+    // Fallbacks for when the data is not found
+    author = author || "Unknown Author";
+    siteName = siteName || window.location.hostname;
+    siteIcon = siteIcon || `https://${window.location.hostname}/favicon.ico`;
+
+    return {
+        url: url,
+        author: author,
+        siteName: siteName,
+        siteIcon: siteIcon
+    };
+}

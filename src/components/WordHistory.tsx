@@ -5,7 +5,7 @@ import Reader from '~components/Reader';
 const WordHistory = () => {
   const [words, setWords] = useState([]);
   const [selectedWord, setSelectedWord] = useState(null);
-  const [article, setArticle] = useState({ id: null, title: null, paragraphs: [], translations: [], looking_words:[] });
+  const [article, setArticle] = useState({ id: null, title: null, paragraphs: [], translations: [], unfamiliar_words:[] });
   let translations = []
   // const [selectedWordParagraph, setSelectedWordParagraph] = useState(null);
 
@@ -31,7 +31,7 @@ const WordHistory = () => {
       id: word.article_id,
       title: word.article_title,
       paragraphs: paragraphs,
-      looking_words: [word.word],
+      unfamiliar_words: [word.word],
       translations: []
     };
     // console.log()

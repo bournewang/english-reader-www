@@ -15,7 +15,7 @@ const Reader = ({ selectedArticle }) => {
   const [definition, setDefinition] = useState(false);
   const [bilingualMode, setBilingualMode] = useState(false);
   const [hint, setHint] = useState(true);
-  const [article, setArticle] = useState({ id: null, title: null, paragraphs: [], translations: [], looking_words: [] });
+  const [article, setArticle] = useState({ id: null, title: null, paragraphs: [], translations: [], unfamiliar_words: [] });
   const [translating, setTranslating] = useState([]);
   const [looking, setLooking] = useState(false);
   const [highlightParagraphs, setHighlightParagraphs] = useState([]);
@@ -30,7 +30,7 @@ const Reader = ({ selectedArticle }) => {
     setHighlightParagraphs([])
     Object.entries(newArticle.paragraphs).map(([index, paragraph]) => {
       console.log("paragraph: ", index, paragraph);
-      newParagraphs[index] = highlightText(paragraph, newArticle.looking_words)
+      newParagraphs[index] = highlightText(paragraph, newArticle.unfamiliar_words)
     })
     setHighlightParagraphs(newParagraphs);
   }, [selectedArticle]);
@@ -55,11 +55,11 @@ const Reader = ({ selectedArticle }) => {
             console.log(response)
             if (response.success) {
               const newArticle = response?.data?.article
-              console.log("new looking words: ", newArticle.looking_words);
+              console.log("new looking words: ", newArticle.unfamiliar_words);
               let newParagraphs = []
               Object.entries(article.paragraphs).map(([index, paragraph]) => {
                 // console.log("paragraph: ", index, paragraph);
-                newParagraphs[index] = highlightText(paragraph, newArticle.looking_words)
+                newParagraphs[index] = highlightText(paragraph, newArticle.unfamiliar_words)
               })
               setHighlightParagraphs(newParagraphs);
             }
@@ -135,7 +135,7 @@ const Reader = ({ selectedArticle }) => {
             Speech 🔊
           </button>
         </h1>
-        {/* <p>{article.looking_words.map((word, index) => (
+        {/* <p>{article.unfamiliar_words.map((word, index) => (
           <span key={word}>{word}, </span>
         ))}</p> */}
 
