@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Header from '~components/Header';
 import Login from '~components/Login'
 import Dashboard from '~components/Dashboard';
 import History from '~components/History';
@@ -18,11 +19,9 @@ function OptionsPage() {
 
   return (
     <>
-    {/* set the layout take 100% of width and height, donot scroll */}
+      {/* set the layout take 100% of width and height, donot scroll */}
       <div className="min-h-screen flex flex-col bg-gray-100 w-full h-full">
-        <header className="bg-gray-800 text-white p-4">
-          <h1 className="text-2xl">Welcome to My App,  email: {email}</h1>
-        </header>
+        <Header email={email} />
         {!email ? (
           <div className="flex-1 flex items-center justify-center">
             <Login />
@@ -61,12 +60,5 @@ function options() {
     </AuthProvider>
   );
 }
-// const container = document.getElementById('root');
-// const root = createRoot(container!);
-// root.render(
-//   <AuthProvider>
-//     <OptionsPage />
-//   </AuthProvider>
-// );
 
 export default options;

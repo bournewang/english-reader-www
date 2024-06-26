@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { getArticles } from '~api/article';
+import { getArticles, getArticle } from '~api/article';
 import Reader from '~components/Reader';
+import Loading from './Loading';
 
 const History = () => {
   const [articles, setArticles] = useState([]);
   const [selectedArticle, setSelectedArticle] = useState(null);
+  const [loading, setLoading] = useState(false)
 
   // Retrieve articles list in useEffect
   useEffect(() => {
@@ -17,9 +19,13 @@ const History = () => {
     init();
   }, []);
 
-  const handleArticleClick = (article) => {
+  const handleArticleClick = async (article) => {
     console.log("set article: ", article.title)
-    setSelectedArticle(article);
+    setLoading(true)
+    const newArticle = await getArticle(article.id);
+    console.log(newArticle)
+    setLoading(false)
+    setSelectedArticle(newArticle);
   };
 
   return (
@@ -27,7 +33,7 @@ const History = () => {
       <div className="w-1/5 p-4 bg-white shadow-lg">
         <h2 className="text-2xl font-bold mb-4">Articles</h2>
         {/* add tailwind style to make ul scroll in height, set its height to 100% and set its overflow to auto. See https://tailwindcss.com/docs/scroll-snap-scroll-snap-x-y#scroll-snap-properties for more info.  */}
-        <ul className="space-y-2 scroll-y-scroll overflow-y-scroll scroll-snap-y-mandatory scroll-snap-align-start scroll-snap-type-y mandatory-snap-x">
+        <ul className="h-[80vh] space-y-2 overflow-y-auto mandatory-snap-x">
           {articles && articles.length > 0 ? (
             articles.map((article) => (
               <li key={article.id} onClick={() => handleArticleClick(article)} className="cursor-pointer hover:bg-gray-200 p-2 rounded">
@@ -41,10 +47,13 @@ const History = () => {
         </ul>
       </div>
       <div className="w-4/5">
+        {loading && <Loading />}
         {selectedArticle ? (
-            <Reader selectedArticle={selectedArticle}/>
+          <Reader selectedArticle={selectedArticle} />
         ) : (
-          <div className="text-gray-500">Select an article to view its content</div>
+          <div className="w-100 h-100 flex items-center justify-center">
+            <p className="text-gray-500 ">Select an article to view its content</p>
+          </div>
         )}
       </div>
     </div>

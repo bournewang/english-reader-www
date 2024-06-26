@@ -5,7 +5,12 @@ export const addArticle = async (title: string, paragraphs: string[]) => {
 };
 
 export const getArticle = async (articleId: number) => {
-    return apiRequest(`/articles/${articleId}`, 'GET');
+    const response = await apiRequest(`/articles/${articleId}`, 'GET');
+    if (response.success) {
+        return response.data;
+    } else {
+        throw new Error(response.message);
+    }
 };
 
 export const getArticles = async () => {

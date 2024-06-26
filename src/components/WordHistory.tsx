@@ -5,7 +5,7 @@ import Reader from '~components/Reader';
 const WordHistory = () => {
   const [words, setWords] = useState([]);
   const [selectedWord, setSelectedWord] = useState(null);
-  const [article, setArticle] = useState({ id: null, title: null, paragraphs: [], translations: [] });
+  const [article, setArticle] = useState({ id: null, title: null, paragraphs: [], translations: [], looking_words:[] });
   let translations = []
   // const [selectedWordParagraph, setSelectedWordParagraph] = useState(null);
 
@@ -34,6 +34,7 @@ const WordHistory = () => {
       looking_words: [word.word],
       translations: []
     };
+    // console.log()
     setArticle(article)
     // setSelectedWordParagraph(word.paragraph_text);
   };
@@ -41,7 +42,7 @@ const WordHistory = () => {
     <div className="flex">
       <div className="w-1/5 p-4 bg-white shadow-lg">
         <h2 className="text-2xl font-bold mb-4">Vocabulary</h2>
-        <ul className="space-y-2 scroll-y-scroll overflow-y-scroll scroll-snap-y-mandatory scroll-snap-align-start scroll-snap-type-y mandatory-snap-x">
+        <ul className="h-[80vh] space-y-2 overflow-y-scroll mandatory-snap-x">
           {words && words.length > 0 ? (
             words.map((word) => (
               <li key={word.id} onClick={() => handleWordClick(word)} className="cursor-pointer hover:bg-gray-200 p-2 rounded">

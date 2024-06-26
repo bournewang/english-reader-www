@@ -3,20 +3,26 @@ import { createRoot } from "react-dom/client";
 import Reader from "~components/Reader";
 import { fetchMainArticleContent, addArticleFromDocument } from "~api/helper";
 import { AuthProvider, useAuth } from "~contexts/AuthContext";
+import "~styles/tailwind.css";
 
-const ReaderApp = ({ overlay }) => {
+const ReaderApp = ({ }) => {
     const { email } = useAuth();
-    const [article, setArticle] = useState({ id: null, title: null, paragraphs: [], translations: [] });
+    const [article, setArticle] = useState({ title: String, paragraphs: {}, translations: [], looking_words: [] });
 
+    console.log("email: ", email);
     useEffect(() => {
         const fetchArticle = async () => {
+            console.log("email in fetch article: ", email);
             if (email) {
+                console.log("fetching article");
                 const response = await addArticleFromDocument();
                 if (response.success) {
                     setArticle(response.data);
                 }
             } else {
+                console.log("fetchMainArticleContent");
                 const articleContent = fetchMainArticleContent();
+                console.log(articleContent)
                 setArticle(articleContent);
             }
         };
@@ -34,26 +40,20 @@ const createReader = async () => {
     if (!overlay) {
         const newOverlay = document.createElement("div");
         newOverlay.id = "english-reader-overlay";
-        newOverlay.style.display = "block";
-        const styles = {
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            backgroundColor: 'white',
-            zIndex: 9999,
-            border: '1px solid red',
-            padding: '20px'
-        };
-
-        Object.assign(newOverlay.style, styles);
+        newOverlay.className = "fixed top-0 left-0 w-full h-full bg-white z-50 border border-red-500 p-5"; // Tailwind CSS classes
+        // // Add click event to close the overlay
+        const closeReader = () => {
+            newOverlay.style.display = "none";
+        }
         document.body.appendChild(newOverlay);
-
         const root = createRoot(newOverlay);
         root.render(
             <AuthProvider>
-                <ReaderApp overlay={newOverlay} />
+                <ReaderApp />
+                <button 
+                    onClick={closeReader}
+                    className="absolute top-2 right-2 px-4 py-2 text-white rounded cursor-pointer text-lg"
+                    >❌</button>
             </AuthProvider>
         );
     } else {

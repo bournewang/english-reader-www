@@ -6,6 +6,7 @@ import { speakText } from "~api/tts";
 import Loading from "~components/Loading";
 import { addArticle } from "~api/article";
 import { addLookingWord } from "~api/lookingWord";
+import { useAuth } from "~contexts/AuthContext";
 import "~styles/reader.css";
 import "~styles/tailwind.css";
 
@@ -14,13 +15,24 @@ const Reader = ({ selectedArticle }) => {
   const [definition, setDefinition] = useState(false);
   const [bilingualMode, setBilingualMode] = useState(false);
   const [hint, setHint] = useState(true);
-  const [article, setArticle] = useState({ id: null, title: null, paragraphs: [], translations: [] });
+  const [article, setArticle] = useState({ id: null, title: null, paragraphs: [], translations: [], looking_words: [] });
   const [translating, setTranslating] = useState([]);
   const [looking, setLooking] = useState(false);
+  const [highlightParagraphs, setHighlightParagraphs] = useState([]);
+  const { email } = useAuth();
 
   useEffect(() => {
     const newArticle = { ...selectedArticle, translations: [] };
     setArticle(newArticle);
+
+    // handle highlight paragraph
+    let newParagraphs = []
+    setHighlightParagraphs([])
+    Object.entries(newArticle.paragraphs).map(([index, paragraph]) => {
+      console.log("paragraph: ", index, paragraph);
+      newParagraphs[index] = highlightText(paragraph, newArticle.looking_words)
+    })
+    setHighlightParagraphs(newParagraphs);
   }, [selectedArticle]);
 
   const handleDoubleClick = async (e) => {
@@ -29,15 +41,29 @@ const Reader = ({ selectedArticle }) => {
     if (selectedWord && !selectedWord.includes(' ')) {
       setLooking(true);
       const result = await fetchDefinition(selectedWord);
+      setLooking(false);
       if (result && result.length > 0) {
         setDefinition(result[0]);
-        setLooking(false);
         setHint(false);
-
-        const paragraphElement = e.target.closest('.paragraph');
-        if (paragraphElement) {
-          const paragraphId = paragraphElement.dataset.paragraphId;
-          addLookingWord(selectedWord, article.id, paragraphId);
+        console.log("result: ", result[0]);
+        console.log("email: ", email)
+        if (email) {
+          const paragraphElement = e.target.closest('.paragraph');
+          if (paragraphElement) {
+            const paragraphId = paragraphElement.dataset.paragraphId;
+            const response = await addLookingWord(selectedWord, article.id, paragraphId);
+            console.log(response)
+            if (response.success) {
+              const newArticle = response?.data?.article
+              console.log("new looking words: ", newArticle.looking_words);
+              let newParagraphs = []
+              Object.entries(article.paragraphs).map(([index, paragraph]) => {
+                // console.log("paragraph: ", index, paragraph);
+                newParagraphs[index] = highlightText(paragraph, newArticle.looking_words)
+              })
+              setHighlightParagraphs(newParagraphs);
+            }
+          }
         }
       }
     }
@@ -84,13 +110,10 @@ const Reader = ({ selectedArticle }) => {
     }
   };
 
-  const highlightText = (text) => {
+  const highlightText = (text, words_list) => {
     const words = text.split(' ');
-    // const words_list = Object.values(article.looking_words);
-    const words_list = article.looking_words != null ? Object.values(article.looking_words) : [];
     return words.map((word, index) => {
       const cleanWord = word.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "").toLowerCase();
-      console.log("word %s -> %s", word, cleanWord);
       if (words_list.includes(cleanWord)) {
         return <span key={index} className="highlight" onClick={handleClick}>{word} </span>;
       }
@@ -105,19 +128,23 @@ const Reader = ({ selectedArticle }) => {
 
   return (<div id="reader-wrap" className="flex flex-row w-full h-full">
     <div id="main-article" className="w-7/10 p-4">
-      <div className="flex flex-row-reverse">
-        <button onClick={readArticle} className="fixed text-sm bg-blue-500 hover:bg-blue-700 text-xs text-white font-bold py-2 px-4 rounded-md">
-          Read Article 🔊
-        </button>
-      </div>
       <div className="prose prose-lg mx-auto my-2 p-2 bg-white rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold mb-4">{article.title}</h1>
+        <h1 className="text-3xl font-bold mb-4 mr-2">{article.title}
+
+          <button onClick={readArticle} className="ml-2 text-sm text-blue-600 font-bold py-2 px-4 rounded-md">
+            Speech 🔊
+          </button>
+        </h1>
+        {/* <p>{article.looking_words.map((word, index) => (
+          <span key={word}>{word}, </span>
+        ))}</p> */}
+
         <table className="min-w-full bg-white">
           <tbody>
-            {article.paragraphs && Object.entries(article.paragraphs).map(([index, paragraph]) => (
+            {highlightParagraphs && Object.entries(highlightParagraphs).map(([index, paragraph]) => (
               <tr key={index} className="paragraph" data-paragraph-id={index}>
-                <td>
-                  <p onDoubleClick={handleDoubleClick}>{highlightText(paragraph)}</p>
+                <td className="relative">
+                  <p onDoubleClick={handleDoubleClick}>{paragraph}</p>
                   {bilingualMode && article.translations[index] &&
                     <p className={`mb-4 text-blue-600 bg-gray-100 p-3 rounded animate-slideDown`}>
                       {article.translations[index]}
@@ -151,8 +178,13 @@ const Reader = ({ selectedArticle }) => {
           <span className="font-bold">Info</span> Double-click any word in the article to see its definition and details here.
         </div>
       }
-      {looking && <div className="mt-20"><Loading /></div>}
-      <DictWrap detail={definition} />
+      {looking && <div className="mt-20 relative" ><Loading /></div>}
+      {!looking && !definition &&
+        <div className="mt-2 bg-red-100 border border-red-200 text-sm text-gray-800 rounded-lg p-4 dark:bg-gray-800/10 dark:border-gray-900 dark:text-blue-500" role="alert">
+          <span className="font-bold">Error</span> Sorry pal, we couldn't find definitions for the word you were looking for.
+        </div>
+      }
+      {<DictWrap detail={definition} />}
     </div>
   </div>
   );

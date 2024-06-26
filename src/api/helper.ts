@@ -53,17 +53,17 @@ export function fetchMainArticleContent()
 {
     const articleElement = fetchMainArticleElement()
     const ps = articleElement.querySelectorAll("p");
-    let paragraphs = []
+    let paragraphs = {}
     let i = 1
     ps.forEach((p) => {
         paragraphs[(i++).toString()] = p.innerText
     })
-    return {title: document.title, paragraphs, translations: []}
+    return {title: document.title, paragraphs, translations: [], looking_words: []}
 }
 
 export function addArticleFromDocument(){
     const article = fetchMainArticleContent()
-    return addArticle(article.title, article.paragraphs)
+    return addArticle(article.title, Object.values(article.paragraphs))
 }
 
 const BASE_API_URL = process.env.PLASMO_PUBLIC_BASE_API_URL;
@@ -94,6 +94,6 @@ export const apiRequest = async (url: string, method: 'GET' | 'POST', data?: any
         const response = await axios(config);
         return response.data;
     } catch (error) {
-        throw error.response.data;
+        throw error.response;
     }
 };

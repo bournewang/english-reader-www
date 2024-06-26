@@ -1,0 +1,23 @@
+#loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* transform: translate(-50%, -50%); */
+    width: 100%;  /* Adjust the width as needed */
+    height: 100%; /* Adjust the height as needed */
+    background-color: rgba(0, 0, 0, 0.5); /* Overlay background color */
+    color: white; /* Text color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px; /* Optional: rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Optional: shadow for better visibility */
+  }
+  
+  #container.loading #loading {
+    display: flex;
+  }
+  
+  #container:not(.loading) #loading {
+    display: none;
+  }

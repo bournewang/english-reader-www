@@ -18,7 +18,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [error, setError] = useState<string>('');
 
     useEffect(() => {
+        console.log("AuthProvider: email, token, error", email, token, error);
         chrome.storage.local.get(['email', 'token'], (result) => {
+            console.log("chrome.storage.local.get(['email', 'token'],");
+            console.log(result)
           if (result.email && result.token) {
             setEmail(result.email);
             setToken(result.token);
