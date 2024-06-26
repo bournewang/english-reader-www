@@ -58,12 +58,23 @@ export function fetchMainArticleContent()
     ps.forEach((p) => {
         paragraphs[(i++).toString()] = p.innerText
     })
-    return {title: document.title, paragraphs, translations: [], unfamiliar_words: []}
+
+    const info = collectArticleInfo()
+    return {
+        ...info,
+        title: document.title, 
+        paragraphs, 
+        translations: [], 
+        unfamiliar_words: []
+    }
 }
 
 export function addArticleFromDocument(){
     const article = fetchMainArticleContent()
-    return addArticle(article.title, Object.values(article.paragraphs))
+    article.paragraphs = Object.values(article.paragraphs)
+    console.log("fetch article: ")
+    console.log(article)
+    return addArticle(article)
 }
 
 const BASE_API_URL = process.env.PLASMO_PUBLIC_BASE_API_URL;
@@ -131,7 +142,7 @@ export function collectArticleInfo() {
     return {
         url: url,
         author: author,
-        siteName: siteName,
-        siteIcon: siteIcon
+        site_name: siteName,
+        site_icon: siteIcon
     };
 }

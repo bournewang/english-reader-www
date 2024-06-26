@@ -4,7 +4,6 @@ import Reader from "~components/Reader";
 import { fetchMainArticleContent, addArticleFromDocument } from "~api/helper";
 import { AuthProvider, useAuth } from "~contexts/AuthContext";
 import "~styles/tailwind.css";
-import {collectArticleInfo} from "~api/helper";
 
 const ReaderApp = ({ }) => {
     const { email } = useAuth();
@@ -65,9 +64,5 @@ const createReader = async () => {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "toggle-reader-mode") {
         createReader();
-
-        // Example usage
-        const articleInfo = collectArticleInfo();
-        console.log(articleInfo);
     }
 });

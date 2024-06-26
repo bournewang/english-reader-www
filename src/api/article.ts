@@ -1,7 +1,7 @@
 import { apiRequest } from './helper';
 
-export const addArticle = async (title: string, paragraphs: string[]) => {
-    return apiRequest('/articles/create', 'POST', { title, paragraphs });
+export const addArticle = async (data = {}) => {
+    return apiRequest('/articles/create', 'POST', data);
 };
 
 export const getArticle = async (articleId: number) => {

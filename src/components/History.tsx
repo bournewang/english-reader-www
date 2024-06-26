@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { getArticles, getArticle } from '~api/article';
 import Reader from '~components/Reader';
 import Loading from './Loading';
+import "~styles/history.css"
+import defaultSiteLogo from "data-base64:~assets/default-site-logo.png"
 
 const History = () => {
   const [articles, setArticles] = useState([]);
@@ -36,9 +38,14 @@ const History = () => {
         <ul className="h-[80vh] space-y-2 overflow-y-auto mandatory-snap-x">
           {articles && articles.length > 0 ? (
             articles.map((article) => (
-              <li key={article.id} onClick={() => handleArticleClick(article)} className="cursor-pointer hover:bg-gray-200 p-2 rounded">
-                <div className="text-sm font-semibold">{article.title}</div>
-                <div className="text-xs text-gray-600">Word Count: {article.word_count}</div>
+              <li key={article.id} onClick={() => handleArticleClick(article)} className="cursor-pointer hover:bg-gray-200 p-2 border-b border-gray-300">
+                <div className="text-sm font-semibold h-10 overflow-hidden text-ellipsis" title={article.title}>
+                  {article.title}
+                </div>
+                <div className="flex space-x-4">
+                  <span className="site-icon"><img src={article.site_icon ? article.site_icon : defaultSiteLogo} /></span>
+                  <span className="text-md pt-1 text-gray-600">Word Count: {article.word_count}</span>
+                </div>
               </li>
             ))
           ) : (

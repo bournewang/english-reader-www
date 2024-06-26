@@ -8,7 +8,6 @@ import { addArticle } from "~api/article";
 import { addLookingWord } from "~api/lookingWord";
 import { useAuth } from "~contexts/AuthContext";
 import "~styles/reader.css";
-import "~styles/tailwind.css";
 
 const Reader = ({ selectedArticle }) => {
   const [word, setWord] = useState("");
@@ -24,6 +23,8 @@ const Reader = ({ selectedArticle }) => {
   useEffect(() => {
     const newArticle = { ...selectedArticle, translations: [] };
     setArticle(newArticle);
+
+    setBilingualMode(false);
 
     // handle highlight paragraph
     let newParagraphs = []
@@ -146,7 +147,7 @@ const Reader = ({ selectedArticle }) => {
                 <td className="relative">
                   <p onDoubleClick={handleDoubleClick}>{paragraph}</p>
                   {bilingualMode && article.translations[index] &&
-                    <p className={`mb-4 text-blue-600 bg-gray-100 p-3 rounded animate-slideDown`}>
+                    <p className={`text-blue-600 bg-gray-100 animate-slideDown`}>
                       {article.translations[index]}
                     </p>
                   }
@@ -165,6 +166,7 @@ const Reader = ({ selectedArticle }) => {
           <input
             type="checkbox"
             value=""
+            checked={bilingualMode}
             className="sr-only peer"
             onChange={toggleBilingualMode}
           />
@@ -179,7 +181,7 @@ const Reader = ({ selectedArticle }) => {
         </div>
       }
       {looking && <div className="mt-20 relative" ><Loading /></div>}
-      {!looking && !definition &&
+      {!hint && !looking && !definition &&
         <div className="mt-2 bg-red-100 border border-red-200 text-sm text-gray-800 rounded-lg p-4 dark:bg-gray-800/10 dark:border-gray-900 dark:text-blue-500" role="alert">
           <span className="font-bold">Error</span> Sorry pal, we couldn't find definitions for the word you were looking for.
         </div>
