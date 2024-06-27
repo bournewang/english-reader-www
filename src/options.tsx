@@ -10,7 +10,7 @@ import './styles/tailwind.css'; // Ensure Tailwind CSS is imported
 import { logoutUser } from '~api/user';
 
 function OptionsPage() {
-  const [path, setPath] = useState<string>('');
+  const [path, setPath] = useState<string>('/home');
   const { email } = useAuth();
   const [menuMode, setMenuMode] = useState("headerMode"); // set to headerMode or not
 
@@ -32,7 +32,7 @@ function OptionsPage() {
         <header className="bg-gray-800 py-4 px-6 flex items-center justify-between">
           {menuMode == 'headerMode' && (
             <nav className="space-x-4">
-              <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("/my")} >           Home</a>
+              <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("/home")} >         Dashboard</a>
               <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("/history")}>       Articles</a>
               <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("/word-history")} > Vocabulary</a>
             </nav>
@@ -60,7 +60,7 @@ function OptionsPage() {
               <nav className="bg-blue-600 w-1/8 p-4">
                 {/* <h1 className="text-white text-2xl mb-4">My App</h1> */}
                 <ul className="space-y-2">
-                  <li><button onClick={() => toggle("/my")} className="text-white hover:text-gray-300 w-full text-left">Dashboard</button></li>
+                  <li><button onClick={() => toggle("/home")} className="text-white hover:text-gray-300 w-full text-left">Dashboard</button></li>
                   <li><button onClick={() => toggle("/history")} className="text-white hover:text-gray-300 w-full text-left">Article History</button></li>
                   <li><button onClick={() => toggle("/word-history")} className="text-white hover:text-gray-300 w-full text-left">Vocabulary</button></li>
                 </ul>
@@ -68,7 +68,7 @@ function OptionsPage() {
             )}
             <div className="flex-1">
               <main className="p-2">
-                {path === "/my" && <Dashboard />}
+                {path === "/home" && <Dashboard />}
                 {path === "/history" && <History />}
                 {path === "/word-history" && <WordHistory />}
                 {/* {path === "/page3" && <Page3 />} */}
