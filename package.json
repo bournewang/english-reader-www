@@ -1,7 +1,7 @@
 {
   "name": "english-reader",
   "displayName": "English Reader",
-  "version": "0.8.61",
+  "version": "0.8.7",
   "description": "Enhance english article reading experience with TTS, bilingual mode, and looking up dictionary.",
   "author": "Wang Xiaopei <xiaopei0206@icloud.com>",
   "scripts": {
@@ -50,6 +50,7 @@
         "resources": [
           "styles/overlay.css",
           "styles/tailwind.css",
+          "assets/default-site-logo.png",
           "contents/login.html"
         ],
         "matches": [

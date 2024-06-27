@@ -14,32 +14,30 @@ const handleLogout = async () => {
 const Header = ({ email, toggleSidebar }) => {
   return (
     <header className="bg-gray-800 py-4 px-6 flex items-center justify-between">
-      <button
-        className="text-gray-400 hover:text-gray-200 focus:outline-none"
-        onClick={toggleSidebar}
-      >
-        English Reader
-      </button>
+
+      <nav className="space-x-4">
+          <a href="#" className="text-gray-400 hover:text-gray-200">Home</a>
+          <a href="#" className="text-gray-400 hover:text-gray-200">Page 1</a>
+          <a href="#" className="text-gray-400 hover:text-gray-200">Page 2</a>
+          <a href="#" className="text-gray-400 hover:text-gray-200">Page 3</a>
+        </nav>
+
       <h1 className="text-white text-lg font-semibold">English Reader Options</h1>
 
-      {/* add some style to login user name */}
-      
       <div className="space-x-2">
-      {email && (
-        <>
-        <span className="text-white ">{email}</span>
-        <button className="text-white ml-4" onClick={handleLogout}>Logout</button>
-        </>
+        {email && (
+          <>
+            <span className="text-white ">{email}</span>
+            <button className="text-white ml-4" onClick={handleLogout}>Logout</button>
+          </>
         )
-      }
+        }
       </div>
-      
-      
     </header>
   );
 };
 
-const HeaderApp = ({}) => {
+const HeaderApp = ({ }) => {
   const { email } = useAuth();
   return (
     <AuthProvider>
