@@ -146,3 +146,8 @@ export function collectArticleInfo() {
         site_icon: siteIcon
     };
 }
+
+export function cleanWord(word: string)
+{
+    return word.replace(/[.,/#?!$%^&*;:{}=\-_`~()]/g, "").toLowerCase();
+}

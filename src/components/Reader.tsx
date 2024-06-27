@@ -7,6 +7,7 @@ import Loading from "~components/Loading";
 import { addArticle } from "~api/article";
 import { addLookingWord } from "~api/lookingWord";
 import { useAuth } from "~contexts/AuthContext";
+import { cleanWord, cleanWord } from "~api/helper";
 import "~styles/reader.css";
 
 const Reader = ({ selectedArticle }) => {
@@ -37,7 +38,8 @@ const Reader = ({ selectedArticle }) => {
   }, [selectedArticle]);
 
   const handleDoubleClick = async (e) => {
-    const selectedWord = window.getSelection().toString().trim();
+    const select = window.getSelection().toString().trim();
+    const selectedWord = cleanWord(select);
     setDefinition(null);
     if (selectedWord && !selectedWord.includes(' ')) {
       setLooking(true);
@@ -46,24 +48,20 @@ const Reader = ({ selectedArticle }) => {
       if (result && result.length > 0) {
         setDefinition(result[0]);
         setHint(false);
-        console.log("result: ", result[0]);
-        console.log("email: ", email)
         if (email) {
           const paragraphElement = e.target.closest('.paragraph');
           if (paragraphElement) {
             const paragraphId = paragraphElement.dataset.paragraphId;
-            const response = await addLookingWord(selectedWord, article.id, paragraphId);
-            console.log(response)
-            if (response.success) {
-              const newArticle = response?.data?.article
-              console.log("new looking words: ", newArticle.unfamiliar_words);
-              let newParagraphs = []
-              Object.entries(article.paragraphs).map(([index, paragraph]) => {
-                // console.log("paragraph: ", index, paragraph);
-                newParagraphs[index] = highlightText(paragraph, newArticle.unfamiliar_words)
-              })
-              setHighlightParagraphs(newParagraphs);
-            }
+            addLookingWord(selectedWord, article.id, paragraphId).then(response => {
+              console.log(response)
+              if (response.success) {
+                const newArticle = response?.data?.article
+                console.log("new looking words: ", newArticle.unfamiliar_words);
+                let newHighlightParagraphs = { ...highlightParagraphs };
+                newHighlightParagraphs[paragraphId] = highlightText(article.paragraphs[paragraphId], newArticle.unfamiliar_words)
+                setHighlightParagraphs(newHighlightParagraphs);
+              }
+            })
           }
         }
       }
@@ -76,7 +74,8 @@ const Reader = ({ selectedArticle }) => {
       const paragraphText = pid !== null ? article.paragraphs[pid] : null;
       if (paragraphText) speakText(paragraphText);
     } else if (e.target.classList.contains("highlight")) {
-      const selectedWord = e.target.innerText;
+      const select = e.target.innerText;
+      const selectedWord = cleanWord(select)
       const result = await fetchDefinition(selectedWord);
       if (result && result.length > 0) {
         setDefinition(result[0]);
@@ -113,12 +112,12 @@ const Reader = ({ selectedArticle }) => {
 
   const highlightText = (text, words_list) => {
     const words = text.split(' ');
-    return words.map((word, index) => {
-      const cleanWord = word.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "").toLowerCase();
-      if (words_list.includes(cleanWord)) {
-        return <span key={index} className="highlight" onClick={handleClick}>{word} </span>;
+    return words.map((text, index) => {
+      const word = cleanWord(text)
+      if (words_list.includes(word)) {
+        return <span key={index} className="highlight" onClick={handleClick}>{text} </span>;
       }
-      return word + ' ';
+      return text + ' ';
     });
   };
 
