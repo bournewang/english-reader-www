@@ -9,7 +9,11 @@ freezer = Freezer(app)
 @app.route('/')
 def home():
     screenshots = current_app.config['SCREENSHOTS']
-    return render_template('home.html', screenshots=screenshots)
+    extension_url = current_app.config['EXTENSION_URL']
+    return render_template('home.html', 
+        screenshots=screenshots,
+        extension_url=extension_url
+        )
 
 @app.route('/features.html')
 def features():
@@ -17,7 +21,8 @@ def features():
 
 @app.route('/install.html')
 def install():
-    return render_template('install.html')
+    extension_url = current_app.config['EXTENSION_URL']
+    return render_template('install.html', extension_url=extension_url)
 
 @app.route('/faq.html')
 def faq():

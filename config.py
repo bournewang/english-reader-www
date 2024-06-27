@@ -2,6 +2,7 @@ import os
 
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
+    EXTENSION_URL = "https://chromewebstore.google.com/detail/english-reader/plipgafgeeplbfgpjednfhfbcjdeeejk"
     SCREENSHOTS = [
         {
             'filename': 'screenshot1.jpg',
