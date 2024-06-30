@@ -1,4 +1,4 @@
-import { stat } from 'fs';
+// import { stat } from 'fs';
 import React, { useEffect, useState } from 'react';
 import { getStats } from '~api/stats'; // You need to implement this API call
 
@@ -11,7 +11,7 @@ const Grid = ({ label, data, delta }) => {
         <div className="text-2xl font-bold text-gray-900 ">{data}</div>
         <span className={`ml-4 flex items-center px-2 py-0.5 mx-2 text-sm rounded-full ${delta > 0 ? 'text-green-600 bg-green-100 ' : 'text-red-600 bg-red-100 '}`}>
           <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d={`${delta > 0 ? "M18 15L12 9L6 15" : "M6 9L12 15L18 9"}`} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d={`${delta > 0 ? "M18 15L12 9L6 15" : "M6 9L12 15L18 9"}`} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
           </svg>
           <span>{delta > 0 ? delta : delta * -1}%</span>
         </span>
@@ -25,13 +25,18 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchStats = async () => {
-      getStats().then(response => {
-        console.log("response: ", response)
-        if (response.success) {
-          console.log(response.data);
-          setStats(response.data);
-        }
-      })
+      try{
+      const response = await getStats()
+      // .then(response => {
+      console.log("response: ", response)
+      if (response.success) {
+        console.log(response.data);
+        setStats(response.data);
+      }
+    }catch(e){
+      console.log("error: ", e)
+    }
+      // })
     };
 
     fetchStats();

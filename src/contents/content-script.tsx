@@ -2,18 +2,18 @@ import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import Reader from "~components/Reader";
 import { fetchMainArticleContent, addArticleFromDocument } from "~api/helper";
-import { AuthProvider, useAuth } from "~contexts/AuthContext";
+import { UserProvider, useUser } from "~contexts/UserContext";
 import "~styles/tailwind.css";
+import "~styles/overlay.css";
 
 const ReaderApp = ({ }) => {
-    const { email } = useAuth();
+    const { user } = useUser();
     const [article, setArticle] = useState({ title: String, paragraphs: {}, translations: [], unfamiliar_words: [] });
 
-    console.log("email: ", email);
     useEffect(() => {
         const fetchArticle = async () => {
-            console.log("email in fetch article: ", email);
-            if (email) {
+            // console.log("user.email in fetch article: ", user.email);
+            if (user && user.id) {
                 console.log("fetching article");
                 const response = await addArticleFromDocument();
                 if (response.success) {
@@ -28,7 +28,7 @@ const ReaderApp = ({ }) => {
         };
 
         fetchArticle();
-    }, [email]);
+    }, [user]);
 
     return (
         <Reader selectedArticle={article} />
@@ -48,13 +48,13 @@ const createReader = async () => {
         document.body.appendChild(newOverlay);
         const root = createRoot(newOverlay);
         root.render(
-            <AuthProvider>
+            <UserProvider>
                 <ReaderApp />
                 <button 
                     onClick={closeReader}
                     className="absolute top-2 right-2 px-4 py-2 text-white rounded cursor-pointer text-lg"
                     >❌</button>
-            </AuthProvider>
+            </UserProvider>
         );
     } else {
         overlay.style.display = overlay.style.display === 'none' ? "block" : 'none';

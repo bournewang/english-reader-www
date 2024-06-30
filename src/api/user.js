@@ -23,13 +23,10 @@ export const loginUser = async (email, password) => {
     }
 };
 
+export const userInfo = async () => {
+    return apiRequest("/auth/info");
+};
+
 export const logoutUser = async () => {
-    try {
-        chrome.storage.local.remove(['token', 'email'], () => {
-            console.log('Token and email removed');
-        });
-        apiRequest("/auth/logout", "POST")
-    } catch (error) {
-        throw error.response;
-    }
+    return apiRequest("/auth/logout", "POST");
 };

@@ -6,7 +6,8 @@ import { speakText } from "~api/tts";
 import Loading from "~components/Loading";
 import { addArticle } from "~api/article";
 import { addLookingWord } from "~api/lookingWord";
-import { useAuth } from "~contexts/AuthContext";
+// import { useAuth } from "~contexts/AuthContext";
+import { useUser } from "~contexts/UserContext";
 import { cleanWord, cleanWord } from "~api/helper";
 import "~styles/reader.css";
 
@@ -19,7 +20,7 @@ const Reader = ({ selectedArticle }) => {
   const [translating, setTranslating] = useState([]);
   const [looking, setLooking] = useState(false);
   const [highlightParagraphs, setHighlightParagraphs] = useState([]);
-  const { email } = useAuth();
+  const { user } = useUser();
 
   useEffect(() => {
     const newArticle = { ...selectedArticle, translations: [] };
@@ -48,7 +49,7 @@ const Reader = ({ selectedArticle }) => {
       if (result && result.length > 0) {
         setDefinition(result[0]);
         setHint(false);
-        if (email) {
+        if (user.id) {
           const paragraphElement = e.target.closest('.paragraph');
           if (paragraphElement) {
             const paragraphId = paragraphElement.dataset.paragraphId;

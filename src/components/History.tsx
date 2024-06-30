@@ -38,7 +38,7 @@ const History = () => {
         <ul className="h-[80vh] space-y-2 overflow-y-auto mandatory-snap-x">
           {articles && articles.length > 0 ? (
             articles.map((article) => (
-              <li key={article.id} onClick={() => handleArticleClick(article)} className="cursor-pointer hover:bg-gray-200 p-2 border-b border-gray-300">
+              <li key={article.id} onClick={() => handleArticleClick(article)} className="cursor-pointer hover:bg-gray-200 p-2 rounded">
                 <div className="text-sm font-semibold h-10 overflow-hidden text-ellipsis" title={article.title}>
                   {article.title}
                 </div>

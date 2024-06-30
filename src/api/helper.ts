@@ -81,7 +81,7 @@ const BASE_API_URL = process.env.PLASMO_PUBLIC_BASE_API_URL;
 
 const getToken = async (): Promise<string> => {
     return new Promise((resolve, reject) => {
-        chrome.storage.local.get(["token"], (result) => {
+        chrome.storage.local.get(["accessToken"], (result) => {
             if (chrome.runtime.lastError) {
                 return reject(chrome.runtime.lastError);
             }
@@ -89,25 +89,24 @@ const getToken = async (): Promise<string> => {
         });
     });
 };
+import { api } from './api';
 
 export const apiRequest = async (url: string, method: 'GET' | 'POST', data?: any): Promise<any> => {
     try {
-        const token = await getToken();
-        if (!token) {
-            throw new Error('Token is not set. Please log in.');
-        }        
-        const config: AxiosRequestConfig = {
+        const response = await api({
             method,
-            url: `${BASE_API_URL}${url}`,
-            headers: { Authorization: `Bearer ${token}` },
+            url,
             data,
-        };
-        const response = await axios(config);
+        });
+        if (response.status !== 200 && response.status !== 201) {
+            throw response;
+        }
         return response.data;
     } catch (error) {
         throw error.response;
     }
 };
+
 
 
 

@@ -1,16 +1,17 @@
 import React, { useState, FormEvent } from 'react';
 import Register from './Register';
 import { loginUser } from '~api/user';
-import { useAuth } from '~contexts/AuthContext';
+import { useUser } from '~contexts/UserContext';
 import "~styles/tailwind.css"
 
 const Login: React.FC = () => {
-    const { setEmail, error, setError } = useAuth();
+    // const { setEmail, error, setError } = useAuth();
+    const { setUser, setAccessToken } = useUser();
     // const [error, setError] = useState('');
     // const [email, setEmail] = useState('');
     const [emailInput, setEmailInput] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const [token, setToken] = useState<string>('');
+    // const [token, setToken] = useState<string>('');
     const [showRegister, setShowRegister] = useState(false);
 
     const handleShowRegister = () => {
@@ -24,21 +25,14 @@ const Login: React.FC = () => {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         try {
-            const data = await loginUser(emailInput, password);
-            setToken(data.access_token);
-            setEmail(emailInput);
-            setError('');
-            console.log("data.access_token", data.access_token);
-            if (chrome?.storage?.local) {
-                console.log("chrome.storage.local is available");
-                chrome.storage.local.set({ token: data.access_token, email: emailInput }, function () {
-                    console.log('Token and email are stored');
-                });
-            } else {
-                console.error("chrome.storage.local is not available");
-            }
+            const response = await loginUser(emailInput, password);
+            if (response.access_token)
+                setAccessToken(response.access_token);
+            if (response.user)
+                setUser(response.user);
+            window.location.reload()
         } catch (error) {
-            setError(error.message || 'Login failed');
+            // setError(error.message || 'Login failed');
         }
     };
 
@@ -69,8 +63,8 @@ const Login: React.FC = () => {
                                 Login
                             </button>
                         </form>
-                        {error && <p className="mt-2 text-red-500">{error}</p>}
-                        {token && <p className="mt-2 text-green-500">Token: {token}</p>}
+                        {/* {error && <p className="mt-2 text-red-500">{error}</p>} */}
+                        {/* {token && <p className="mt-2 text-green-500">Token: {token}</p>} */}
                     </div>
                     <p
                         onClick={handleShowRegister}
