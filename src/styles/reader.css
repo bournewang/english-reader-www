@@ -30,7 +30,7 @@
     cursor: pointer;
 }
 
-.speaker-icon {
+.speaker-icon, .translate-icon {
     cursor: pointer;
     /* margin-left: 10px; */
     /* flex-shrink: 0; */

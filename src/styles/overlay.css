@@ -57,13 +57,6 @@ p.origin {
     justify-content: space-between;
 }
 
-.speaker-icon {
-    cursor: pointer;
-    margin-left: 10px;
-    flex-shrink: 0;
-}
-
-
 /* 
 #controls-section {
     border-bottom: 1px solid black;

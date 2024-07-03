@@ -5,10 +5,10 @@ import { translateText } from "~api/translate";
 import { speakText } from "~api/tts";
 import Loading from "~components/Loading";
 import { addArticle } from "~api/article";
-import { addLookingWord } from "~api/lookingWord";
+import { addLookingWord, removeLookingWord } from "~api/lookingWord";
 // import { useAuth } from "~contexts/AuthContext";
 import { useUser } from "~contexts/UserContext";
-import { cleanWord, cleanWord } from "~api/helper";
+import { cleanWord } from "~api/helper";
 import "~styles/reader.css";
 
 const Reader = ({ selectedArticle }) => {
@@ -38,11 +38,29 @@ const Reader = ({ selectedArticle }) => {
     setHighlightParagraphs(newParagraphs);
   }, [selectedArticle]);
 
+  const updateHighlightParagraphs = (paragraphId, unfamiliar_words) => {
+    // console.log("new looking words: ", newArticle.unfamiliar_words);
+    let newHighlightParagraphs = { ...highlightParagraphs };
+    newHighlightParagraphs[paragraphId] = highlightText(article.paragraphs[paragraphId], unfamiliar_words)
+    setHighlightParagraphs(newHighlightParagraphs);
+  }
   const handleDoubleClick = async (e) => {
     const select = window.getSelection().toString().trim();
     const selectedWord = cleanWord(select);
     setDefinition(null);
-    if (selectedWord && !selectedWord.includes(' ')) {
+
+    const paragraphElement = e.target.closest('.paragraph');
+    const paragraphId = paragraphElement.dataset.paragraphId;
+
+    // test if the target has a class "highlight"
+    if (e.target.classList.contains("highlight")) {
+      removeLookingWord(selectedWord, article.id, paragraphId).then(response => {
+        console.log(response)
+        if (response.success) {
+          updateHighlightParagraphs(paragraphId, response?.data?.article?.unfamiliar_words)
+        }
+      })
+    }else if (selectedWord && !selectedWord.includes(' ')) {
       setLooking(true);
       const result = await fetchDefinition(selectedWord);
       setLooking(false);
@@ -50,9 +68,7 @@ const Reader = ({ selectedArticle }) => {
         setDefinition(result[0]);
         setHint(false);
         if (user.id) {
-          const paragraphElement = e.target.closest('.paragraph');
           if (paragraphElement) {
-            const paragraphId = paragraphElement.dataset.paragraphId;
             addLookingWord(selectedWord, article.id, paragraphId).then(response => {
               console.log(response)
               if (response.success) {
@@ -90,6 +106,7 @@ const Reader = ({ selectedArticle }) => {
 
     const newMode = !bilingualMode;
     setBilingualMode(newMode);
+    if (!newMode) return
 
     let newArticle = { ...article, translations: [...article.translations] };
     const paragraphs = Object.entries(article.paragraphs);
@@ -100,7 +117,12 @@ const Reader = ({ selectedArticle }) => {
           newTranslating[i] = true;
           return newTranslating;
         });
-        newArticle.translations[i] = await translateText(text);
+        try{
+          newArticle.translations[i] = await translateText(text);
+        }catch(e) {
+          console.log(e)
+        }
+
         setTranslating((prev) => {
           const newTranslating = [...prev];
           newTranslating[i] = false;
@@ -110,6 +132,33 @@ const Reader = ({ selectedArticle }) => {
       }
     }
   };
+
+  const handleTranslate = async(e) => {
+    const pid = e.target.dataset.paragraphId;
+    if (!pid) return;
+    const text = article.paragraphs[pid];
+    if (!text) return;
+    
+    setBilingualMode(true);
+
+    setTranslating((prev) => {
+      const newTranslating = [...prev];
+      newTranslating[pid] = true;
+      return newTranslating;
+    });
+
+    let newArticle = { ...article, translations: [...article.translations] };
+    
+    newArticle.translations[pid] = await translateText(text);
+
+    setTranslating((prev) => {
+      const newTranslating = [...prev];
+      newTranslating[pid] = false;
+      return newTranslating;
+    });
+
+    setArticle(newArticle)
+  }
 
   const highlightText = (text, words_list) => {
     const words = text.split(' ');
@@ -153,7 +202,10 @@ const Reader = ({ selectedArticle }) => {
                   }
                   {bilingualMode && translating[index] && <Loading />}
                 </td>
-                <td><span className="speaker-icon" data-paragraph-id={index} onClick={handleClick}>🔊</span></td>
+                <td>
+                  <span className="speaker-icon" data-paragraph-id={index} onClick={handleClick}>🔊</span>
+                  <span className="translate-icon" data-paragraph-id={index} onClick={handleTranslate}>🌐</span>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -161,7 +213,7 @@ const Reader = ({ selectedArticle }) => {
       </div>
     </div>
     <div id="sidebar" className="w-3/10 p-4">
-      <div id="controls-section" className="flex items-center space-x-4">
+      {/* <div id="controls-section" className="flex items-center space-x-4">
         <label className="inline-flex items-center cursor-pointer">
           <input
             type="checkbox"
@@ -174,7 +226,7 @@ const Reader = ({ selectedArticle }) => {
           <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Bilingual Mode</span>
         </label>
       </div>
-      <hr className="my-2" />
+      <hr className="my-2" /> */}
       {hint &&
         <div className="mt-2 bg-blue-100 border border-blue-200 text-sm text-blue-800 rounded-lg p-4 dark:bg-blue-800/10 dark:border-blue-900 dark:text-blue-500" role="alert">
           <span className="font-bold">Info</span> Double-click any word in the article to see its definition and details here.

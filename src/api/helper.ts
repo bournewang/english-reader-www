@@ -91,7 +91,7 @@ const getToken = async (): Promise<string> => {
 };
 import { api } from './api';
 
-export const apiRequest = async (url: string, method: 'GET' | 'POST', data?: any): Promise<any> => {
+export const apiRequest = async (url: string, method: 'GET' | 'POST' | 'DELETE', data?: any): Promise<any> => {
     try {
         const response = await api({
             method,

@@ -5,6 +5,7 @@ import Dashboard from '~components/Dashboard';
 import History from '~components/History';
 import WordHistory from '~components/WordHistory';
 import Plans from '~components/Plans';
+import Faq from '~components/Faq';
 import SubscriptionManagement from '~components/Subscription';
 // import Page3 from '~Page3';
 // import { AuthProvider, useAuth } from './contexts/AuthContext';
@@ -24,7 +25,7 @@ function OptionsPage() {
   };
 
   const handleLogout = async () => {
-    await logoutUser();
+    logoutUser();
     logout();
     window.location.reload();
   };
@@ -46,8 +47,9 @@ function OptionsPage() {
 
           <div className="space-x-2 flex items-center justify-between">
             <nav className="space-x-2">
-              <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("/plan")} > Plans</a>
-              <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("/subscription")} > Subscription</a>
+            <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("/faq")} > FAQ</a>
+              {/* <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("/plan")} > Plans</a>
+              <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("/subscription")} > Subscription</a> */}
             </nav>
             {user && (
               <nav className="space-x-2">
@@ -73,6 +75,7 @@ function OptionsPage() {
                   <li><button onClick={() => toggle("/word-history")} className="text-white hover:text-gray-300 w-full text-left">Vocabulary</button></li>
                   <li><button onClick={() => toggle("/plan")} className="text-white hover:text-gray-300 w-full text-left">Plans</button></li>
                   <li><button onClick={() => toggle("/subscription")} className="text-white hover:text-gray-300 w-full text-left">Subscription</button></li>
+                  <li><button onClick={() => toggle("/faq")} className="text-white hover:text-gray-300 w-full text-left">FAQ</button></li>
                 </ul>
               </nav>
             )}
@@ -83,7 +86,7 @@ function OptionsPage() {
                 {path === "/word-history" && <WordHistory />}
                 {path === "/plan" && <Plans />}
                 {path === "/subscription" && <SubscriptionManagement />}
-                {/* {path === "/page3" && <Page3 />} */}
+                {path === "/faq" && <Faq/>}
               </main>
             </div>
           </div>
