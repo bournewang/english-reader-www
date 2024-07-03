@@ -11,6 +11,10 @@
     padding: 16px;
 }
 
+#main-article .prose{
+    max-width: 100%;
+}
+
 #sidebar {
     width: 30%;
     overflow-y: auto;
@@ -34,10 +38,8 @@
     cursor: pointer;
 }
 
-.speaker-icon, .translate-icon {
+.speaker-btn, .translate-icon {
     cursor: pointer;
-    /* margin-left: 10px; */
-    /* flex-shrink: 0; */
 }
 
 /* Override the default border-bottom width for tbody tr */

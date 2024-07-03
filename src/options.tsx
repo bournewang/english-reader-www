@@ -7,6 +7,7 @@ import WordHistory from '~components/WordHistory';
 import Plans from '~components/Plans';
 import Faq from '~components/Faq';
 import SubscriptionManagement from '~components/Subscription';
+import ReadingResources from '~components/Resources';
 // import Page3 from '~Page3';
 // import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { UserProvider, useUser } from '~contexts/UserContext';
@@ -41,6 +42,8 @@ function OptionsPage() {
               <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("/home")} >         Dashboard</a>
               <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("/history")}>       Articles</a>
               <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("/word-history")} > Vocabulary</a>
+              <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("/reading-resources")} > Reading Resources</a>
+              
             </nav>
           )}
           <h1 className="text-white text-lg font-semibold">English Reader</h1>
@@ -84,6 +87,7 @@ function OptionsPage() {
                 {path === "/home" && <Dashboard />}
                 {path === "/history" && <History />}
                 {path === "/word-history" && <WordHistory />}
+                {path === "/reading-resources" && <ReadingResources />}
                 {path === "/plan" && <Plans />}
                 {path === "/subscription" && <SubscriptionManagement />}
                 {path === "/faq" && <Faq/>}

@@ -4,7 +4,6 @@ import Reader from "~components/Reader";
 import { fetchMainArticleContent, addArticleFromDocument } from "~api/helper";
 import { UserProvider, useUser } from "~contexts/UserContext";
 import "~styles/tailwind.css";
-import "~styles/overlay.css";
 
 const ReaderApp = ({ }) => {
     const { user } = useUser();

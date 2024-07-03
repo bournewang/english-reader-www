@@ -92,7 +92,7 @@ const Reader = ({ selectedArticle }) => {
     }
   };
   const handleClick = async (e) => {
-    if (e.target.classList.contains("speaker-icon")) {
+    if (e.target.classList.contains("speaker-btn")) {
       const paragraphElement = e.target.closest('.paragraph');
       const pid = paragraphElement ? paragraphElement.dataset.paragraphId : null;
       const paragraphText = pid !== null ? article.paragraphs[pid] : null;
@@ -105,37 +105,6 @@ const Reader = ({ selectedArticle }) => {
         setDefinition(result[0]);
         setLooking(false);
         setHint(false);
-      }
-    }
-  };
-  const toggleBilingualMode = async () => {
-    if (!article || !article.paragraphs) return;
-
-    const newMode = !bilingualMode;
-    setBilingualMode(newMode);
-    if (!newMode) return
-
-    let newArticle = { ...article, translations: [...article.translations] };
-    const paragraphs = Object.entries(article.paragraphs);
-    for (const [i, text] of paragraphs) {
-      if (!newArticle.translations[i]) {
-        setTranslating((prev) => {
-          const newTranslating = [...prev];
-          newTranslating[i] = true;
-          return newTranslating;
-        });
-        try{
-          newArticle.translations[i] = await translateText(text);
-        }catch(e) {
-          console.log(e)
-        }
-
-        setTranslating((prev) => {
-          const newTranslating = [...prev];
-          newTranslating[i] = false;
-          return newTranslating;
-        });
-        setArticle({ ...newArticle });
       }
     }
   };
@@ -188,7 +157,7 @@ const Reader = ({ selectedArticle }) => {
 
   return (<div id="reader-wrap" className="flex flex-row w-full h-full">
     <div id="main-article" className="w-7/10 p-4">
-      <div className="prose prose-lg mx-auto my-2 p-2 bg-white rounded-lg shadow-lg">
+      <div className="prose prose-lg mx-2 max-w-full my-2 p-2 bg-white rounded-lg shadow-lg">
         <h1 className="text-3xl font-bold mb-4 mr-2">{article.title}
 
           <button onClick={readArticle} className="ml-2 text-sm text-blue-600 font-bold py-2 px-4 rounded-md">
@@ -213,7 +182,7 @@ const Reader = ({ selectedArticle }) => {
                   {bilingualMode && translating[index] && <Loading />}
                 </td>
                 <td>
-                  <span className="speaker-icon" data-paragraph-id={index} onClick={handleClick}>🔊</span>
+                  <span className="speaker-btn" data-paragraph-id={index} onClick={handleClick}>🔊</span>
                   <span className="translate-icon" data-paragraph-id={index} onClick={handleTranslate}>🌐</span>
                 </td>
               </tr>
@@ -223,8 +192,8 @@ const Reader = ({ selectedArticle }) => {
       </div>
     </div>
     <div id="sidebar" className="w-3/10 p-4">
-      {/* <div id="controls-section" className="flex items-center space-x-4">
-        <label className="inline-flex items-center cursor-pointer">
+      <div id="controls-section" className="flex items-center space-x-4">
+        {/* <label className="inline-flex items-center cursor-pointer">
           <input
             type="checkbox"
             value=""
@@ -234,12 +203,10 @@ const Reader = ({ selectedArticle }) => {
           />
           <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
           <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Bilingual Mode</span>
-        </label>
-      </div>
-      <hr className="my-2" /> */}
-      <div>
+        </label> */}
         Native Language: <LocaleSelector onSelectLocale={handleSelectLocale} />
       </div>
+      <hr className="my-2" />
       {hint &&
         <div className="mt-2 bg-blue-100 border border-blue-200 text-sm text-blue-800 rounded-lg p-4 dark:bg-blue-800/10 dark:border-blue-900 dark:text-blue-500" role="alert">
           <span className="font-bold">Info</span> Double-click any word in the article to see its definition and details here.
