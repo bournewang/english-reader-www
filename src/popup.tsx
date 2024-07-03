@@ -1,9 +1,9 @@
-// import React from 'react';
+import {useState} from 'react';
 // import IndexPopup from './IndexPopup';
 // import { AuthProvider } from '~contexts/AuthContext';
 import { UserProvider } from "~contexts/UserContext";
 import "~styles/tailwind.css"
-import React from 'react';
+// import React from 'react';
 // import { useAuth } from './contexts/AuthContext';
 import { useUser } from '~contexts/UserContext';
 import { logoutUser } from '~api/user';
@@ -12,6 +12,7 @@ function IndexPopup() {
   //   const { email, setEmail, isLoggedIn, setIsLoggedIn } = useContext(UserContext);
   // const { email, setEmail } = useAuth()
   const {user} = useUser();
+  const [env] = useState(process.env.NODE_ENV);
 
   const toggleReaderMode = () => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -50,6 +51,8 @@ function IndexPopup() {
       >
         {user ? "History" : ("Login / Register")}
       </button>
+
+      <p>{env}</p>
 
     </div>
   );

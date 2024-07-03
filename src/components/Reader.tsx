@@ -10,6 +10,7 @@ import { addLookingWord, removeLookingWord } from "~api/lookingWord";
 import { useUser } from "~contexts/UserContext";
 import { cleanWord } from "~api/helper";
 import "~styles/reader.css";
+import LocaleSelector from "./LocaleSelector";
 
 const Reader = ({ selectedArticle }) => {
   const [word, setWord] = useState("");
@@ -21,6 +22,12 @@ const Reader = ({ selectedArticle }) => {
   const [looking, setLooking] = useState(false);
   const [highlightParagraphs, setHighlightParagraphs] = useState([]);
   const { user } = useUser();
+
+  const [locale, setLocale] = useState(null);
+
+  const handleSelectLocale = (selectedLocale) => {
+      setLocale(selectedLocale);
+  };
 
   useEffect(() => {
     const newArticle = { ...selectedArticle, translations: [] };
@@ -148,8 +155,11 @@ const Reader = ({ selectedArticle }) => {
     });
 
     let newArticle = { ...article, translations: [...article.translations] };
-    
-    newArticle.translations[pid] = await translateText(text);
+    try{
+      newArticle.translations[pid] = await translateText(text, locale.locale);
+    }catch(e) {
+      console.log(e)
+    }
 
     setTranslating((prev) => {
       const newTranslating = [...prev];
@@ -227,6 +237,9 @@ const Reader = ({ selectedArticle }) => {
         </label>
       </div>
       <hr className="my-2" /> */}
+      <div>
+        Native Language: <LocaleSelector onSelectLocale={handleSelectLocale} />
+      </div>
       {hint &&
         <div className="mt-2 bg-blue-100 border border-blue-200 text-sm text-blue-800 rounded-lg p-4 dark:bg-blue-800/10 dark:border-blue-900 dark:text-blue-500" role="alert">
           <span className="font-bold">Info</span> Double-click any word in the article to see its definition and details here.

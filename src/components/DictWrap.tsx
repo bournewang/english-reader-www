@@ -22,7 +22,7 @@ const DictWrap = ({ detail }) => {
                 .phonetics {display: flex;margin-top: .5em;}
                 .phonetic-speaker-icon {cursor: pointer; display: inline-block; margin-left: 10px;font-size: 18px;}
                 .hidden-audio {display: none;}
-                ol {counter-reset: item;}
+                ol {counter-reset: item; padding-inline-start: 10px;}
                 ol li {list-style: none;}
                 ol li::before {counter-increment: item; content: counter(item) ". "; font-weight: bold;}
                 .sourceUrl a{color: black; text-decoration: none;}

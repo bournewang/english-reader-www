@@ -19,6 +19,10 @@
     /* Add a background color if needed */
 }
 
+#sidebar ol {
+    padding-inline-start: 10px;
+}
+
 #definition-container {
     max-height: calc(100vh - 200px);
     /* Adjust this value as needed */
