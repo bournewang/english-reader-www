@@ -8,7 +8,7 @@
     "dev": "plasmo dev",
     "build": "plasmo build && npm run zip",
     "zip": "cd build/chrome-mv3-prod && zip -r english-reader.zip . && mv english-reader.zip ~/Downloads",
-    "build:css": "npx tailwindcss -i tailwind.css -o src/styles/tailwind.css",
+    "build:css": "npx tailwindcss -i tailwind.css -o build/chrome-mv3-dev/tailwind.css && cp build/chrome-mv3-dev/tailwind.css build/chrome-mv3-prod/tailwind.css",
     "package": "plasmo package"
   },
   "dependencies": {
@@ -49,9 +49,8 @@
       {
         "resources": [
           "styles/overlay.css",
-          "styles/tailwind.css",
-          "assets/default-site-logo.png",
-          "contents/login.html"
+          "tailwind.css",
+          "assets/default-site-logo.png"
         ],
         "matches": [
           "<all_urls>"

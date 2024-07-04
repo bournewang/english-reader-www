@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import DictWrap from "./DictWrap";
+// import DictWrap from "./DictWrap";
+import DictPanel from "./DictPanel";
 import { fetchDefinition } from "~api/dict";
 import { translateText } from "~api/translate";
 import { speakText } from "~api/tts";
@@ -9,6 +10,7 @@ import { addLookingWord, removeLookingWord } from "~api/lookingWord";
 // import { useAuth } from "~contexts/AuthContext";
 import { useUser } from "~contexts/UserContext";
 import { cleanWord } from "~api/helper";
+// import "~styles/tailwind.css";
 import "~styles/reader.css";
 import LocaleSelector from "./LocaleSelector";
 
@@ -144,7 +146,7 @@ const Reader = ({ selectedArticle }) => {
     return words.map((text, index) => {
       const word = cleanWord(text)
       if (words_list.includes(word)) {
-        return <span key={index} className="highlight" onClick={handleClick}>{text} </span>;
+        return <span key={index} className="highlight bg-green-300 cursor-pointer" onClick={handleClick}>{text} </span>;
       }
       return text + ' ';
     });
@@ -155,9 +157,9 @@ const Reader = ({ selectedArticle }) => {
     speakText(articleText);
   };
 
-  return (<div id="reader-wrap" className="flex flex-row w-full h-full">
-    <div id="main-article" className="w-7/10 p-4">
-      <div className="prose prose-lg mx-2 max-w-full my-2 p-2 bg-white rounded-lg shadow-lg">
+  return (<div id="reader-wrap1" className="flex w-full h-[90vh] overflow-y-scroll">
+    <div id="main-article" className="p-4 overflow-y-auto padding-8" style={{ width: '70%' }}>
+      <div className="prose1 prose-lg mx-2 max-w-full my-2 p-2 bg-white rounded-lg shadow-lg" style={{ maxWidth: '100%' }}>
         <h1 className="text-3xl font-bold mb-4 mr-2">{article.title}
 
           <button onClick={readArticle} className="ml-2 text-sm text-blue-600 font-bold py-2 px-4 rounded-md">
@@ -182,8 +184,8 @@ const Reader = ({ selectedArticle }) => {
                   {bilingualMode && translating[index] && <Loading />}
                 </td>
                 <td>
-                  <span className="speaker-btn" data-paragraph-id={index} onClick={handleClick}>🔊</span>
-                  <span className="translate-icon" data-paragraph-id={index} onClick={handleTranslate}>🌐</span>
+                  <span className="speaker-btn cursor-pointer" data-paragraph-id={index} onClick={handleClick}>🔊</span>
+                  <span className="translate-icon cursor-pointer" data-paragraph-id={index} onClick={handleTranslate}>🌐</span>
                 </td>
               </tr>
             ))}
@@ -191,7 +193,7 @@ const Reader = ({ selectedArticle }) => {
         </table>
       </div>
     </div>
-    <div id="sidebar" className="w-3/10 p-4">
+    <div id="sidebar1" className="p-4 overflow-y-auto" style={{ width: '30%' }}>
       <div id="controls-section" className="flex items-center space-x-4">
         {/* <label className="inline-flex items-center cursor-pointer">
           <input
@@ -218,7 +220,7 @@ const Reader = ({ selectedArticle }) => {
           <span className="font-bold">Error</span> Sorry pal, we couldn't find definitions for the word you were looking for.
         </div>
       }
-      {<DictWrap detail={definition} />}
+      {<DictPanel detail={definition} />}
     </div>
   </div>
   );

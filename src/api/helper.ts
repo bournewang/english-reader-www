@@ -48,7 +48,6 @@ export function fetchMainArticleElement() {
     return largestElement; // Return the largest text block element
 }
 
-
 export function fetchMainArticleContent()
 {
     const articleElement = fetchMainArticleElement()
