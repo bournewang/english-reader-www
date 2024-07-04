@@ -4,9 +4,9 @@ import Reader from '~components/Reader';
 
 const WordHistory = () => {
   const [words, setWords] = useState([]);
-  const [selectedWord, setSelectedWord] = useState(null);
+  // const [selectedWord, setSelectedWord] = useState(null);
   const [article, setArticle] = useState({ id: null, title: null, paragraphs: [], translations: [], unfamiliar_words:[] });
-  let translations = []
+  // let translations = []
   // const [selectedWordParagraph, setSelectedWordParagraph] = useState(null);
 
   // Retrieve words list in useEffect
@@ -22,8 +22,8 @@ const WordHistory = () => {
 
   const handleWordClick = (word) => {
     console.log("set word: ", word.word)
-    setSelectedWord(word);
-    let paragraphs = []
+    // setSelectedWord(word);
+    const paragraphs = []
     paragraphs["0"] = "..."
     paragraphs[word.paragraph_id] = word.paragraph_text
     paragraphs["-"] = "..."

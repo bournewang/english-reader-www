@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { getStats } from '~api/stats'; // You need to implement this API call
 
-const Grid = ({ label, data, delta }) => {
+
+const Grid: React.FC<{label: string, data: number, delta: number}> = ({ label, data, delta }) => {
   return (
     <div className="p-5 bg-white rounded shadow-sm">
       <div className="text-base text-gray-400 ">{label}</div>

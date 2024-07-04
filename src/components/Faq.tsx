@@ -28,7 +28,7 @@ const Faq = () =>{
             </div>
             <div className="mb-4">
                 <h3 className="text-xl font-semibold text-gray-700">How do I use the reader mode?</h3>
-                <p className="text-gray-500 text-lg">In an English article page, click on the "Reader Mode" button in the extension icon to open the reader. This will provide you with enhanced reading features.</p>
+                <p className="text-gray-500 text-lg">In an English article page, click on the &quot;Reader Mode&quot; button in the extension icon to open the reader. This will provide you with enhanced reading features.</p>
             </div>
             <div className="mb-4">
                 <h3 className="text-xl font-semibold text-gray-700">How do I look up a word in the dictionary?</h3>

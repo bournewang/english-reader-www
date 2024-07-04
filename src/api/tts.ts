@@ -1,7 +1,7 @@
 import '~jsbrowserpackageraw.js';
 
 export class SpeechSynthesizerSingleton {
-    private static instance: any;
+    private static instance: object;
 
     private constructor() { }
 

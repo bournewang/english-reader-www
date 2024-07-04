@@ -16,3 +16,17 @@ export const getArticle = async (articleId: number) => {
 export const getArticles = async () => {
     return apiRequest(`/articles/list`, 'GET');
 };
+
+export interface Article {
+    'id': number | null;
+    'title': string | null;
+    'word_count': number | null;
+    'author': string | null,
+    'url': string | null,
+    'site': string | null,
+    'site_name': string | null,
+    'site_icon': string | null,
+    'created_at': string | null
+    'paragraphs': string[];
+    'unfamiliar_words': string[];
+}

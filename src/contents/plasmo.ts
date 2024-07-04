@@ -1,5 +1,5 @@
 import type { PlasmoCSConfig } from "plasmo"
-import type { PlasmoCSUIProps } from "plasmo"
+// import type { PlasmoCSUIProps } from "plasmo"
 
 export const config: PlasmoCSConfig = {
   matches: ["<all_urls>"],

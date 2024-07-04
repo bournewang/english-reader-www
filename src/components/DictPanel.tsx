@@ -1,11 +1,13 @@
-import React, { useState } from "react"
+import React from "react"
 
-const DictPanel = ({ detail }) => {
+import type { Definition, Phonetic, Meaning, DictDetail } from "~api/dict"
+
+const DictPanel: React.FC<{detail: DictDetail}> = ({ detail }) => {
   return (
     detail && <div id="details-section">
       <h2>{detail.word}</h2>
       <div className="phonetics">
-        {detail.phonetics && detail.phonetics.length > 0 && detail.phonetics.map((phonetic, index) => (
+        {detail.phonetics && detail.phonetics.length > 0 && detail.phonetics.map((phonetic: Phonetic, index) => (
           <p key={index}>
             {phonetic.text}
             {phonetic.audio && (
@@ -17,11 +19,11 @@ const DictPanel = ({ detail }) => {
           </p>
         ))}
       </div>
-      {detail.meanings && detail.meanings.length > 0 && detail.meanings.map((meaning, meaningIndex) => (
+      {detail.meanings && detail.meanings.length > 0 && detail.meanings.map((meaning: Meaning, meaningIndex) => (
         <div className="meaning" key={meaningIndex}>
           <p className="partOfSpeech">{meaning.partOfSpeech}: {detail.word}</p>
           <ol>
-            {meaning.definitions.map((definition, definitionIndex) => (
+            {meaning.definitions.map((definition: Definition, definitionIndex) => (
               <li key={definitionIndex}>
                 {definition.definition}
                 {definition.synonyms && definition.synonyms.length > 0 && (

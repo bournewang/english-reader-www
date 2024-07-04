@@ -5,7 +5,9 @@ const Resources = () => {
     return (
         <div className="min-h-screen bg-gray-100 flex flex-col items-center py-10">
             <h1 className="text-3xl font-bold mb-8">Reading Resources</h1>
-            <p className="mb-8 text-gray-600 text-lg">If you can't see the icon of a resource, you might can't access it in your region, try others.</p>
+            <p className="mb-8 text-gray-600 text-lg">
+            If you can&apos;t see the icon of a resource, you might can&apos;t access it in your region, try others.
+            </p>
             <div className="w-full max-w-4xl">
                 {Object.keys(readingResources).map((category) => (
                     <div key={category} className="mb-8">

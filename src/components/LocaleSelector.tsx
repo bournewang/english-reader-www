@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import locales from '~api/locales';
 
 const LocaleSelector = ({ onSelectLocale }) => {
@@ -92,6 +93,10 @@ const LocaleSelector = ({ onSelectLocale }) => {
             )} */}
         </div>
     );
+};
+
+LocaleSelector.propTypes = {
+    onSelectLocale: PropTypes.func.isRequired,
 };
 
 export default LocaleSelector;

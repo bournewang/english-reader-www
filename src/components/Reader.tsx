@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import DictWrap from "./DictWrap";
+// import DictWrap from "./DictWrap";
+import DictPanel from "./DictPanel";
 import { fetchDefinition } from "~api/dict";
 import { translateText } from "~api/translate";
+import type { Article } from "~api/article";
 import { speakText } from "~api/tts";
 import Loading from "~components/Loading";
-import { addArticle } from "~api/article";
+// import { addArticle } from "~api/article";
 import { addLookingWord, removeLookingWord } from "~api/lookingWord";
 // import { useAuth } from "~contexts/AuthContext";
 import { useUser } from "~contexts/UserContext";
@@ -12,9 +14,13 @@ import { cleanWord } from "~api/helper";
 import "~styles/reader.css";
 import LocaleSelector from "./LocaleSelector";
 
-const Reader = ({ selectedArticle }) => {
-  const [word, setWord] = useState("");
-  const [definition, setDefinition] = useState(false);
+interface ReaderProps {
+  selectedArticle: Article;
+}
+
+const Reader: React.FC<ReaderProps> = ({ selectedArticle }) => {
+  // const [word, setWord] = useState("");
+  const [definition, setDefinition] = useState(null);
   const [bilingualMode, setBilingualMode] = useState(false);
   const [hint, setHint] = useState(true);
   const [article, setArticle] = useState({ id: null, title: null, paragraphs: [], translations: [], unfamiliar_words: [] });
@@ -36,7 +42,7 @@ const Reader = ({ selectedArticle }) => {
     setBilingualMode(false);
 
     // handle highlight paragraph
-    let newParagraphs = []
+    const newParagraphs = []
     setHighlightParagraphs([])
     Object.entries(newArticle.paragraphs).map(([index, paragraph]) => {
       console.log("paragraph: ", index, paragraph);
@@ -47,7 +53,7 @@ const Reader = ({ selectedArticle }) => {
 
   const updateHighlightParagraphs = (paragraphId, unfamiliar_words) => {
     // console.log("new looking words: ", newArticle.unfamiliar_words);
-    let newHighlightParagraphs = { ...highlightParagraphs };
+    const newHighlightParagraphs = { ...highlightParagraphs };
     newHighlightParagraphs[paragraphId] = highlightText(article.paragraphs[paragraphId], unfamiliar_words)
     setHighlightParagraphs(newHighlightParagraphs);
   }
@@ -81,7 +87,7 @@ const Reader = ({ selectedArticle }) => {
               if (response.success) {
                 const newArticle = response?.data?.article
                 console.log("new looking words: ", newArticle.unfamiliar_words);
-                let newHighlightParagraphs = { ...highlightParagraphs };
+                const newHighlightParagraphs = { ...highlightParagraphs };
                 newHighlightParagraphs[paragraphId] = highlightText(article.paragraphs[paragraphId], newArticle.unfamiliar_words)
                 setHighlightParagraphs(newHighlightParagraphs);
               }
@@ -123,7 +129,7 @@ const Reader = ({ selectedArticle }) => {
       return newTranslating;
     });
 
-    let newArticle = { ...article, translations: [...article.translations] };
+    const newArticle = { ...article, translations: [...article.translations] };
     try{
       newArticle.translations[pid] = await translateText(text, locale.locale);
     }catch(e) {
@@ -215,10 +221,10 @@ const Reader = ({ selectedArticle }) => {
       {looking && <div className="mt-20 relative" ><Loading /></div>}
       {!hint && !looking && !definition &&
         <div className="mt-2 bg-red-100 border border-red-200 text-sm text-gray-800 rounded-lg p-4 dark:bg-gray-800/10 dark:border-gray-900 dark:text-blue-500" role="alert">
-          <span className="font-bold">Error</span> Sorry pal, we couldn't find definitions for the word you were looking for.
+          <span className="font-bold">Error</span> Sorry pal, we couldnot find definitions for the word you were looking for.
         </div>
       }
-      {<DictWrap detail={definition} />}
+      {<DictPanel detail={definition} />}
     </div>
   </div>
   );

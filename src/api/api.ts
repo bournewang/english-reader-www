@@ -1,6 +1,4 @@
 import axios from 'axios';
-// import { BASE_API_URL } from '../config';
-import { useUser } from '~contexts/UserContext';
 
 const BASE_API_URL = process.env.PLASMO_PUBLIC_BASE_API_URL;
 

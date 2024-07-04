@@ -10,7 +10,7 @@ const Register: React.FC = () => {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         try {
-            const data = await registerUser(email, password);
+            await registerUser(email, password);
             setMessage('Registration successful!');
         } catch (error) {
             setMessage(error.message || 'Registration failed');

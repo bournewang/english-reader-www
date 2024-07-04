@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios';
+// import axios, { AxiosRequestConfig } from 'axios';
 import { addArticle } from './article';
 
 export function fetchMainArticleElement() {
@@ -53,7 +53,7 @@ export function fetchMainArticleContent()
 {
     const articleElement = fetchMainArticleElement()
     const ps = articleElement.querySelectorAll("p");
-    let paragraphs = {}
+    const paragraphs = {}
     let i = 1
     ps.forEach((p) => {
         paragraphs[(i++).toString()] = p.innerText
@@ -77,21 +77,11 @@ export function addArticleFromDocument(){
     return addArticle(article)
 }
 
-const BASE_API_URL = process.env.PLASMO_PUBLIC_BASE_API_URL;
-
-const getToken = async (): Promise<string> => {
-    return new Promise((resolve, reject) => {
-        chrome.storage.local.get(["accessToken"], (result) => {
-            if (chrome.runtime.lastError) {
-                return reject(chrome.runtime.lastError);
-            }
-            resolve(result.token);
-        });
-    });
-};
 import { api } from './api';
 
-export const apiRequest = async (url: string, method: 'GET' | 'POST' | 'DELETE', data?: any): Promise<any> => {
+type RequestData = string | number | object | undefined;
+
+export const apiRequest = async (url: string, method: 'GET' | 'POST' | 'DELETE', data?: RequestData): Promise<RequestData> => {
     try {
         const response = await api({
             method,
