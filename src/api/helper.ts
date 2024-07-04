@@ -61,6 +61,10 @@ export function fetchMainArticleContent()
 
     const info = collectArticleInfo()
     return {
+        id: 0,
+        word_count: 0,
+        site: "",
+        created_at: "",
         ...info,
         title: document.title, 
         paragraphs, 
@@ -80,8 +84,8 @@ export function addArticleFromDocument(){
 import { api } from './api';
 
 type RequestData = string | number | object | undefined;
-
-export const apiRequest = async (url: string, method: 'GET' | 'POST' | 'DELETE', data?: RequestData): Promise<RequestData> => {
+type ResponseData = {success: boolean, message: string, data: object};
+export const apiRequest = async (url: string, method: 'GET' | 'POST' | 'DELETE', data?: RequestData): Promise<ResponseData> => {
     try {
         const response = await api({
             method,
