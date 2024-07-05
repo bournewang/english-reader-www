@@ -1,6 +1,6 @@
 // import axios, { AxiosRequestConfig } from 'axios';
 import { addArticle } from './article';
-
+import type { Article } from './article';
 export function fetchMainArticleElement() {
     // Check for common semantic tags
     const commonTags = ['article', 'main', 'section'];
@@ -48,8 +48,8 @@ export function fetchMainArticleElement() {
     return largestElement; // Return the largest text block element
 }
 
-
-export function fetchMainArticleContent()
+// make fetchMainArticleContent return an Article decleration
+export function fetchMainArticleContent(): Article 
 {
     const articleElement = fetchMainArticleElement()
     const ps = articleElement.querySelectorAll("p");
@@ -60,15 +60,17 @@ export function fetchMainArticleContent()
     })
 
     const info = collectArticleInfo()
+
+    // make return as a Article type
     return {
+       ...info,
         id: 0,
         word_count: 0,
         site: "",
         created_at: "",
-        ...info,
-        title: document.title, 
-        paragraphs, 
-        translations: [], 
+        title: document.title,
+        paragraphs,
+        // translations: [],
         unfamiliar_words: []
     }
 }

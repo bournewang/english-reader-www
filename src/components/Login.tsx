@@ -30,7 +30,7 @@ const Login: React.FC = () => {
                 setAccessToken(response.access_token);
             if (response.user)
                 setUser(response.user);
-            window.location.reload()
+            // window.location.reload()
         } catch (error) {
             // setError(error.message || 'Login failed');
         }

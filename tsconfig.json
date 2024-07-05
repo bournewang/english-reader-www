@@ -5,9 +5,9 @@
   ],
   "include": [
     ".plasmo/index.d.ts",
-    "./**/*.ts",
-    "./**/*.tsx"
-, "src/api/user.js"  ],
+    "./src/**/*.js",
+    "./src/**/*.ts",
+    "./src/**/*.tsx"],
   "compilerOptions": {
     "paths": {
       "~*": [

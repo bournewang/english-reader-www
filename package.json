@@ -8,7 +8,7 @@
     "dev": "plasmo dev && npm run lint",
     "build": "plasmo build && npm run zip",
     "zip": "cd build/chrome-mv3-prod && zip -r english-reader.zip . && mv english-reader.zip ~/Downloads",
-    "build:css": "npx tailwindcss -i tailwind.css -o src/styles/tailwind.css",
+    "build:css": "cp src/styles/reader.css build/chrome-mv3-dev/ && cp src/styles/reader.css build/chrome-mv3-prod/ && npx tailwindcss -i tailwind.css -o build/chrome-mv3-dev/tailwind.css && cp build/chrome-mv3-dev/tailwind.css build/chrome-mv3-prod/tailwind.css",
     "lint": "eslint src/**/*.js src/**/*.jsx",
     "lint:fix": "eslint src/**/*.js src/**/*.jsx --fix",
     "package": "plasmo package"
@@ -57,10 +57,9 @@
     "web_accessible_resources": [
       {
         "resources": [
-          "styles/overlay.css",
-          "styles/tailwind.css",
-          "assets/default-site-logo.png",
-          "contents/login.html"
+          "tailwind.css",
+          "reader.css",
+          "assets/default-site-logo.png"
         ],
         "matches": [
           "<all_urls>"

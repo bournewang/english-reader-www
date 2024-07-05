@@ -26,7 +26,8 @@ export interface Article {
     'site': string | null,
     'site_name': string | null,
     'site_icon': string | null,
-    'created_at': string | null
-    'paragraphs': string[];
+    'created_at': string | null,
+    // paragraphs is an mapping with paragraph id to paragraph text
+    'paragraphs': object,
     'unfamiliar_words': string[];
 }
