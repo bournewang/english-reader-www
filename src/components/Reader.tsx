@@ -159,7 +159,7 @@ const Reader = ({ selectedArticle }) => {
 
   return (<div id="reader-wrap1" className="flex w-full h-[90vh] overflow-y-scroll">
     <div id="main-article" className="p-4 overflow-y-auto padding-8" style={{ width: '70%' }}>
-      <div className="prose1 prose-lg mx-2 max-w-full my-2 p-2 bg-white rounded-lg shadow-lg" style={{ maxWidth: '100%' }}>
+      <div className="prose-lg mx-2 max-w-full my-2 p-2 bg-white rounded-lg shadow-lg" style={{ maxWidth: '100%' }}>
         <h1 className="text-3xl font-bold mb-4 mr-2">{article.title}
 
           <button onClick={readArticle} className="ml-2 text-sm text-blue-600 font-bold py-2 px-4 rounded-md">
@@ -184,8 +184,8 @@ const Reader = ({ selectedArticle }) => {
                   {bilingualMode && translating[index] && <Loading />}
                 </td>
                 <td>
-                  <span className="speaker-btn cursor-pointer" data-paragraph-id={index} onClick={handleClick}>🔊</span>
-                  <span className="translate-icon cursor-pointer" data-paragraph-id={index} onClick={handleTranslate}>🌐</span>
+                  <p className="speaker-btn cursor-pointer" data-paragraph-id={index} onClick={handleClick}>🔊</p>
+                  <p className="translate-icon cursor-pointer" data-paragraph-id={index} onClick={handleTranslate}>🌐</p>
                 </td>
               </tr>
             ))}
@@ -206,7 +206,8 @@ const Reader = ({ selectedArticle }) => {
           <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
           <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Bilingual Mode</span>
         </label> */}
-        Native Language: <LocaleSelector onSelectLocale={handleSelectLocale} />
+        <p>Native Language: </p>
+        <LocaleSelector onSelectLocale={handleSelectLocale} />
       </div>
       <hr className="my-2" />
       {hint &&

@@ -50,6 +50,7 @@
         "resources": [
           "styles/overlay.css",
           "tailwind.css",
+          "reader.css",
           "assets/default-site-logo.png"
         ],
         "matches": [

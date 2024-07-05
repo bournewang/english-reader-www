@@ -1,3 +1,23 @@
+:host{
+    all: initial;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+html, body {
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+}
+
+p, .text-base{
+    font-size: 16px;
+    line-height: 1.5em;
+}
+.text-lg {
+    font-size: 1.125em;
+    line-height: 1.75em;
+}
 #main-article .prose :where(tbody tr):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
     border-bottom-width: 0px !important; 
     border-bottom-color: var(--tw-prose-td-borders);
@@ -11,4 +31,4 @@
 #main-article .prose-lg :where(p):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
     margin-top: 0.3em;
     margin-bottom: 0.3em;
-} 
+}

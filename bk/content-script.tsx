@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import Reader from "~components/Reader";
 import { fetchMainArticleContent, addArticleFromDocument } from "~api/helper";
 import { UserProvider, useUser } from "~contexts/UserContext";
+import "~styles/tailwind.css";
 
 const ReaderApp = ({ }) => {
     const { user } = useUser();
@@ -29,9 +30,7 @@ const ReaderApp = ({ }) => {
     }, [user]);
 
     return (
-        <>
-            <Reader selectedArticle={article} />
-        </>
+        <Reader selectedArticle={article} />
     );
 };
 
@@ -40,58 +39,26 @@ const createReader = async () => {
     if (!overlay) {
         const newOverlay = document.createElement("div");
         newOverlay.id = "english-reader-overlay";
-        newOverlay.style.position = "fixed";
-        newOverlay.style.background = "white";
-        newOverlay.style.top = "0";
-        newOverlay.style.left = "0";
-        newOverlay.style.width = "100%";
-        newOverlay.style.height = "100%";
-        newOverlay.style.zIndex = "99999";
-        
-        document.body.appendChild(newOverlay);
-
-        // Create shadow root
-        const shadowRoot = newOverlay.attachShadow({ mode: 'open' });
-        const shadowContainer = document.createElement("html");
-        shadowRoot.appendChild(shadowContainer);
-
-        const fetchCSS = async (url) => {
-            const response = await fetch(url);
-            return response.text();
-        };
-
-        // get chrome extension dynamic url
-        const extensionUrl = chrome.runtime.getURL("tailwind.css");
-        const tailwindCSS = await fetchCSS(extensionUrl);
-        const style = document.createElement("style");
-        style.textContent = tailwindCSS;
-        shadowRoot.appendChild(style);
-        const readerStyle = document.createElement("style");
-        readerStyle.textContent = await fetchCSS(chrome.runtime.getURL("reader.css"));
-        shadowRoot.appendChild(readerStyle);
-
+        newOverlay.className = "fixed top-0 left-0 w-full h-full bg-white z-50 border border-red-500 p-5"; // Tailwind CSS classes
+        // // Add click event to close the overlay
         const closeReader = () => {
             newOverlay.style.display = "none";
-        };
-
-        const root = createRoot(shadowContainer);
+        }
+        document.body.appendChild(newOverlay);
+        const root = createRoot(newOverlay);
         root.render(
-            <body>
             <UserProvider>
-                <ReaderApp></ReaderApp>
+                <ReaderApp />
                 <button 
                     onClick={closeReader}
-                    className="absolute top-2 right-2 px-4 py-2 text-white bg-red-500 rounded cursor-pointer text-lg">
-                    ❌
-                </button>
+                    className="absolute top-2 right-2 px-4 py-2 text-white rounded cursor-pointer text-lg"
+                    >❌</button>
             </UserProvider>
-            </body>
         );
     } else {
         overlay.style.display = overlay.style.display === 'none' ? "block" : 'none';
     }
 };
-
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "toggle-reader-mode") {
