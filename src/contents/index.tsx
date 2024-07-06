@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import Reader from "~components/Reader";
 import { fetchMainArticleContent, addArticleFromDocument } from "~api/helper";
 import { UserProvider, useUser } from "~contexts/UserContext";
+import { LocaleProvider } from "~contexts/LocaleContext";
 import type { Article } from "~api/article";
 
 const ReaderApp = () => {
@@ -81,12 +82,14 @@ const createReader = async () => {
     root.render(
         <body>
             <UserProvider>
-                <ReaderApp></ReaderApp>
-                <button
-                    onClick={closeReader}
-                    className="absolute top-0 right-0 px-4 py-2 text-white rounded cursor-pointer text-lg">
-                    ❌
-                </button>
+                <LocaleProvider>
+                    <ReaderApp></ReaderApp>
+                    <button
+                        onClick={closeReader}
+                        className="absolute top-0 right-0 px-4 py-2 text-white rounded cursor-pointer text-lg">
+                        ❌
+                    </button>
+                </LocaleProvider>
             </UserProvider>
         </body>
     );

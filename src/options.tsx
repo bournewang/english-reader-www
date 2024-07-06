@@ -6,11 +6,13 @@ import History from '~components/History';
 import WordHistory from '~components/WordHistory';
 import Plans from '~components/Plans';
 import Faq from '~components/Faq';
+import Settings from '~components/Settings';
 import SubscriptionManagement from '~components/Subscription';
 import ReadingResources from '~components/Resources';
 // import Page3 from '~Page3';
 // import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { UserProvider, useUser } from '~contexts/UserContext';
+import { LocaleProvider, useLocale } from '~contexts/LocaleContext';
 import './styles/tailwind.css'; // Ensure Tailwind CSS is imported
 import { logoutUser } from '~api/user';
 
@@ -51,6 +53,7 @@ function OptionsPage() {
           <div className="space-x-2 flex items-center justify-between">
             <nav className="space-x-2">
             <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("/faq")} > FAQ</a>
+            <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("/settings")} > Settings</a>
               {/* <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("/plan")} > Plans</a>
               <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("/subscription")} > Subscription</a> */}
             </nav>
@@ -79,6 +82,7 @@ function OptionsPage() {
                   <li><button onClick={() => toggle("/plan")} className="text-white hover:text-gray-300 w-full text-left">Plans</button></li>
                   <li><button onClick={() => toggle("/subscription")} className="text-white hover:text-gray-300 w-full text-left">Subscription</button></li>
                   <li><button onClick={() => toggle("/faq")} className="text-white hover:text-gray-300 w-full text-left">FAQ</button></li>
+                  <li><button onClick={() => toggle("/settings")} className="text-white hover:text-gray-300 w-full text-left">Settings</button></li>
                 </ul>
               </nav>
             )}
@@ -91,6 +95,7 @@ function OptionsPage() {
                 {path === "/plan" && <Plans />}
                 {path === "/subscription" && <SubscriptionManagement />}
                 {path === "/faq" && <Faq/>}
+                {path === "/settings" && <Settings/>}
               </main>
             </div>
           </div>
@@ -104,7 +109,9 @@ function OptionsPage() {
 function options() {
   return (
     <UserProvider>
-      <OptionsPage />
+      <LocaleProvider>
+        <OptionsPage />
+      </LocaleProvider>
     </UserProvider>
   );
 }

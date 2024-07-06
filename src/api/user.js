@@ -30,3 +30,7 @@ export const userInfo = async () => {
 export const logoutUser = async () => {
     return apiRequest("/auth/logout", "POST");
 };
+
+export const updateLocale = async (locale) => {
+    return apiRequest("/user/locale", "POST", {locale});
+};
