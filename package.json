@@ -1,12 +1,12 @@
 {
   "name": "english-reader",
   "displayName": "English Reader",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "description": "Enhance english article reading experience with TTS, bilingual mode, and looking up dictionary.",
   "author": "Wang Xiaopei <xiaopei0206@icloud.com>",
   "scripts": {
     "dev": "plasmo dev && npm run lint",
-    "build": "plasmo build && cp src/styles/reader.css build/chrome-mv3-prod/ && npx tailwindcss -i tailwind.css -o build/chrome-mv3-prod/tailwind.css && npm run zip",
+    "build": "plasmo build && cp src/styles/*.css build/chrome-mv3-prod/ && npm run zip",
     "zip": "cd build/chrome-mv3-prod && zip -r english-reader.zip . && mv english-reader.zip ~/Downloads",
     "build:css": "cp src/styles/reader.css build/chrome-mv3-dev/ && npx tailwindcss -i tailwind.css -o src/styles/tailwind.css && cp src/styles/tailwind.css build/chrome-mv3-dev/tailwind.css",
     "lint": "eslint src/**/*.js src/**/*.jsx",

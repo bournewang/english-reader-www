@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '~components/Header';
 import Login from '~components/Login'
 import Dashboard from '~components/Dashboard';
@@ -15,12 +15,28 @@ import { UserProvider, useUser } from '~contexts/UserContext';
 import { LocaleProvider, useLocale } from '~contexts/LocaleContext';
 import './styles/tailwind.css'; // Ensure Tailwind CSS is imported
 import { logoutUser } from '~api/user';
+import { getQueryParams } from '~api/helper';
 
 function OptionsPage() {
   const [path, setPath] = useState<string>('/home');
   // const { user.email } = useAuth();
-  const {user, logout} = useUser();
+  const { user, logout } = useUser();
   const [menuMode, setMenuMode] = useState("headerMode"); // set to headerMode or not
+  // define a list of path DONOT need login
+  const publicPathList = [
+    'faq',
+    'settings',
+    'reading-resources',
+  ];
+  // init path in effect
+  useEffect(() => {
+    const params = getQueryParams();
+    console.log(params);
+    if (params.page) {
+      console.log("set path: ", params.page)
+      setPath(params.page)
+    }
+  }, [])
 
   const toggle = (newPath: string) => {
     console.log('toggle');
@@ -41,19 +57,18 @@ function OptionsPage() {
         <header className="bg-gray-800 py-4 px-6 flex items-center justify-between">
           {menuMode == 'headerMode' && (
             <nav className="space-x-4">
-              <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("/home")} >         Dashboard</a>
-              <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("/history")}>       Articles</a>
-              <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("/word-history")} > Vocabulary</a>
-              <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("/reading-resources")} > Reading Resources</a>
-              
+              <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("reading-resources")} > Reading Resources</a>
+              <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("faq")} > FAQ</a>
+              <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("settings")} > Settings</a>
             </nav>
           )}
           <h1 className="text-white text-lg font-semibold">English Reader</h1>
 
           <div className="space-x-2 flex items-center justify-between">
             <nav className="space-x-2">
-            <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("/faq")} > FAQ</a>
-            <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("/settings")} > Settings</a>
+              <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("home")} >         Dashboard</a>
+              <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("history")}>       Articles</a>
+              <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("word-history")} > Vocabulary</a>
               {/* <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("/plan")} > Plans</a>
               <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("/subscription")} > Subscription</a> */}
             </nav>
@@ -66,7 +81,8 @@ function OptionsPage() {
           </div>
         </header>
 
-        {!user || !user.id ? (
+        {/* show login if user not login and accessing path not in publicPathList */}
+        {((!user || !user.id) && !publicPathList.includes(path)) ? (
           <div className="flex-1 flex items-center justify-center">
             <Login />
           </div>
@@ -76,26 +92,26 @@ function OptionsPage() {
               <nav className="bg-blue-600 w-1/8 p-4">
                 {/* <h1 className="text-white text-2xl mb-4">My App</h1> */}
                 <ul className="space-y-2">
-                  <li><button onClick={() => toggle("/home")} className="text-white hover:text-gray-300 w-full text-left">Dashboard</button></li>
-                  <li><button onClick={() => toggle("/history")} className="text-white hover:text-gray-300 w-full text-left">Article History</button></li>
-                  <li><button onClick={() => toggle("/word-history")} className="text-white hover:text-gray-300 w-full text-left">Vocabulary</button></li>
-                  <li><button onClick={() => toggle("/plan")} className="text-white hover:text-gray-300 w-full text-left">Plans</button></li>
-                  <li><button onClick={() => toggle("/subscription")} className="text-white hover:text-gray-300 w-full text-left">Subscription</button></li>
-                  <li><button onClick={() => toggle("/faq")} className="text-white hover:text-gray-300 w-full text-left">FAQ</button></li>
-                  <li><button onClick={() => toggle("/settings")} className="text-white hover:text-gray-300 w-full text-left">Settings</button></li>
+                  <li><button onClick={() => toggle("home")} className="text-white hover:text-gray-300 w-full text-left">Dashboard</button></li>
+                  <li><button onClick={() => toggle("history")} className="text-white hover:text-gray-300 w-full text-left">Article History</button></li>
+                  <li><button onClick={() => toggle("word-history")} className="text-white hover:text-gray-300 w-full text-left">Vocabulary</button></li>
+                  <li><button onClick={() => toggle("plan")} className="text-white hover:text-gray-300 w-full text-left">Plans</button></li>
+                  <li><button onClick={() => toggle("subscription")} className="text-white hover:text-gray-300 w-full text-left">Subscription</button></li>
+                  <li><button onClick={() => toggle("faq")} className="text-white hover:text-gray-300 w-full text-left">FAQ</button></li>
+                  <li><button onClick={() => toggle("settings")} className="text-white hover:text-gray-300 w-full text-left">Settings</button></li>
                 </ul>
               </nav>
             )}
             <div className="flex-1">
               <main className="p-2">
-                {path === "/home" && <Dashboard />}
-                {path === "/history" && <History />}
-                {path === "/word-history" && <WordHistory />}
-                {path === "/reading-resources" && <ReadingResources />}
-                {path === "/plan" && <Plans />}
-                {path === "/subscription" && <SubscriptionManagement />}
-                {path === "/faq" && <Faq/>}
-                {path === "/settings" && <Settings/>}
+                {path === "home" && <Dashboard />}
+                {path === "history" && <History />}
+                {path === "word-history" && <WordHistory />}
+                {path === "reading-resources" && <ReadingResources />}
+                {path === "plan" && <Plans />}
+                {path === "subscription" && <SubscriptionManagement />}
+                {path === "faq" && <Faq />}
+                {path === "settings" && <Settings />}
               </main>
             </div>
           </div>

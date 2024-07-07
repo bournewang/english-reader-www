@@ -145,3 +145,22 @@ export function cleanWord(word: string)
 {
     return word.replace(/[.,/#?!$%^&*;:{}=\-_`~()]/g, "").toLowerCase();
 }
+
+export function getHashParams() {
+    const hash = window.location.hash.substr(1); // Get the part after the '#'
+    const params = {};
+    hash.split('&').forEach(part => {
+        const [key, value] = part.split('=');
+        params[decodeURIComponent(key)] = decodeURIComponent(value);
+    });
+    return params;
+}
+
+export function getQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    const result = {};
+    for (const [key, value] of params.entries()) {
+        result[key] = value;
+    }
+    return result;
+}
