@@ -1,6 +1,7 @@
 from flask import Flask, render_template, current_app
 from flask_frozen import Freezer
 import os
+import time
 
 app = Flask(__name__)
 app.config.from_object('config.Config')
@@ -12,6 +13,7 @@ def home():
     extension_url = current_app.config['EXTENSION_URL']
     return render_template('home.html', 
         screenshots=screenshots,
+        current_time=int(time.time()),
         extension_url=extension_url
         )
 
@@ -22,7 +24,10 @@ def features():
 @app.route('/install.html')
 def install():
     extension_url = current_app.config['EXTENSION_URL']
-    return render_template('install.html', extension_url=extension_url)
+    return render_template('install.html', 
+        extension_url=extension_url, 
+        current_time=int(time.time())
+        )
 
 @app.route('/faq.html')
 def faq():

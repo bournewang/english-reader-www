@@ -9,7 +9,7 @@
         <p class="text-xl mb-6">With Text-to-Speech, Bilingual Mode, and Dictionary</p>
         <div>
             <a href="{{extension_url}}" target="_blank" class="m-4 btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add to Chrome</a>
-            <a href="{{ url_for('static', filename='english-reader.zip') }}" target="_blank" class="m-4 btn bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mt-4">Download (& Install Manually)</a>
+            <a href="{{ url_for('static', filename='english-reader.zip') }}?v={{ current_time | urlencode }}" target="_blank" class="m-4 btn bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mt-4">Download (& Install Manually)</a>
         </div>
     </div>
 </section>
