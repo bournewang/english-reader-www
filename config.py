@@ -7,10 +7,14 @@ class Config:
     SCREENSHOTS = [
         {
             'filename': 'screenshot-reader.jpg',
-            'alt': 'Screenshot 1'
+            'alt': 'Reader Mode'
         },
         {
             'filename': 'history.jpg',
-            'alt': 'Screenshot 2'
+            'alt': 'Reading History'
+        },
+        {
+            'filename': 'resource.jpg',
+            'alt': 'Reading Resources'
         }
     ]    
