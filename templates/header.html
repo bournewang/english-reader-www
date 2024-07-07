@@ -1,7 +1,11 @@
-<header>
-    <div class="container">
-        <h1>English Reader</h1>
-        <nav>
+<header class="bg-teal-800">
+    <div class="container flex items-center justify-between ">
+        <div class="flex ">
+            <img src="/static/img/logo.png" alt="logo" class="logo">
+            <h1>English Reader</h1>
+        </div>
+        
+        <nav style="margin-left: 5em;">
             <ul>
                 <li><a href="{{ url_for('home') }}">Home</a></li>
                 <li><a href="{{ url_for('features') }}">Features</a></li>

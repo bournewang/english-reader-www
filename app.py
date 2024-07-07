@@ -36,5 +36,9 @@ def contact():
 def privacy_policy():
     return render_template('privacy_policy.html')
 
+@app.context_processor
+def inject_email():
+    return dict(email=current_app.config['EMAIL'])
+
 if __name__ == "__main__":
     app.run(debug=True)
