@@ -157,8 +157,8 @@ const Reader: React.FC<ReaderProps> = ({ selectedArticle }) => {
   };
 
   return (article && <div id="reader-wrap1" className="flex w-full h-[90vh] overflow-y-scroll">
-      <div id="main-article" className="bg-white shadow-lg rounded-lg overflow-y-auto" style={{ width: '70%' }}>
-        <div className="prose-lg mx-2 p-2 max-w-full " style={{ maxWidth: '100%' }}>
+      <div id="main-article" className="mx-2 p-2 bg-white shadow-lg rounded-lg overflow-y-auto" style={{ width: '70%' }}>
+        <div className="prose-lg max-w-full " style={{ maxWidth: '100%' }}>
           <h1 className="text-3xl font-bold mb-4 mr-2">{article.title}
 
             <button onClick={readArticle} className="ml-2 text-sm text-blue-600 font-bold py-2 px-4 rounded-md">
@@ -193,7 +193,7 @@ const Reader: React.FC<ReaderProps> = ({ selectedArticle }) => {
           </table>
         </div>
       </div>
-      <div id="sidebar1" className="bg-white mx-2 p-2 shadow-lg rounded-lg overflow-y-auto" style={{ width: '30%' }}>
+      <div id="sidebar" className="bg-white mx-2 p-2 shadow-lg rounded-lg overflow-y-auto" style={{ width: '30%' }}>
         <div id="controls-section" className="flex items-center space-x-4">
         </div>
         {/* <hr className="my-2" /> */}

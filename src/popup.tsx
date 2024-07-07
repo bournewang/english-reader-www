@@ -46,12 +46,10 @@ function IndexPopup() {
         {user ? "History" : ("Login / Register")}
       </button>
 
+      <div className="flex justify-center items-center">
+        <LocaleSelector />
+      </div>
 
-      {!user && (
-        <div className="flex justify-center items-center">
-          <LocaleSelector />
-        </div>
-      )}
       {env === "development" && <p>{env}</p>}
 
     </div>

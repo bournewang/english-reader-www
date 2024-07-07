@@ -64,13 +64,11 @@ export function fetchMainArticleContent(): Article
     // make return as a Article type
     return {
        ...info,
-        id: 0,
+        id: null,
         word_count: 0,
         site: "",
         created_at: "",
-        title: document.title,
         paragraphs,
-        // translations: [],
         unfamiliar_words: []
     }
 }
@@ -136,6 +134,7 @@ export function collectArticleInfo() {
 
     return {
         url: url,
+        title: document.title,
         author: author,
         site_name: siteName,
         site_icon: siteIcon

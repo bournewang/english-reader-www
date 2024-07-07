@@ -56,7 +56,7 @@ const History = () => {
         </div>
       </div>
       <div className="w-4/5">
-        <div className="p-4 ">
+        <div className="">
           {loading && <Loading />}
           {selectedArticle ? (
             <Reader selectedArticle={selectedArticle} />
