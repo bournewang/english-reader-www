@@ -1,8 +1,8 @@
 {
   "name": "english-reader",
-  "displayName": "English Reader",
-  "version": "0.9.3",
-  "description": "Enhance english article reading experience with TTS, bilingual mode, and looking up dictionary.",
+  "displayName": "Easy Reading",
+  "version": "0.9.5",
+  "description": "Enhance english article reading experience with speech, bilingual mode, and looking up dictionary.",
   "author": "Wang Xiaopei <xiaopei0206@icloud.com>",
   "scripts": {
     "dev": "plasmo dev && npm run lint",
@@ -59,6 +59,7 @@
         "resources": [
           "tailwind.css",
           "reader.css",
+          "assets/logo.png",
           "assets/default-site-logo.png"
         ],
         "matches": [

@@ -21,7 +21,7 @@ const Resources = () => {
                                     rel="noopener noreferrer"
                                     className="block p-4 bg-white rounded-lg shadow hover:bg-gray-100 transition text-center"
                                 >
-                                    <img src={resource.icon_url} alt={resource.name} className="w-16 h-16 mb-4 m-auto" />
+                                    <img src={resource.icon_url} alt={resource.name} className="h-16 mb-4 m-auto" />
                                     <h3 className="text-xl font-medium">{resource.name}</h3>
                                 </a>
                             ))}

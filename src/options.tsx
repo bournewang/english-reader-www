@@ -16,6 +16,7 @@ import { LocaleProvider, useLocale } from '~contexts/LocaleContext';
 import './styles/tailwind.css'; // Ensure Tailwind CSS is imported
 import { logoutUser } from '~api/user';
 import { getQueryParams } from '~api/helper';
+import siteLogo from "data-base64:~assets/logo.png"
 
 function OptionsPage() {
   const [path, setPath] = useState<string>('/home');
@@ -54,31 +55,32 @@ function OptionsPage() {
       {/* set the layout take 100% of width and height, donot scroll */}
       <div className="min-h-screen flex flex-col bg-gray-100 w-full h-full">
         {/* <Header user.email={user.email} /> */}
-        <header className="bg-gray-800 py-4 px-6 flex items-center justify-between">
+        <header className="bg-gray-800 py-1 px-6 flex items-center justify-between">
+          <div className="space-x-2 flex items-center justify-between">
+            <img src={siteLogo} className="w-16 h-16" alt="" />
+            <h1 className="text-white text-lg font-semibold">English Reader</h1>
+          </div>
+
           {menuMode == 'headerMode' && (
             <nav className="space-x-4">
-              <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("reading-resources")} > Reading Resources</a>
-              <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("faq")} > FAQ</a>
-              <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("settings")} > Settings</a>
-            </nav>
-          )}
-          <h1 className="text-white text-lg font-semibold">English Reader</h1>
-
-          <div className="space-x-2 flex items-center justify-between">
-            <nav className="space-x-2">
               <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("home")} >         Dashboard</a>
               <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("history")}>       Articles</a>
               <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("word-history")} > Vocabulary</a>
+
+              <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("reading-resources")} > Reading Resources</a>
+              <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("faq")} > FAQ</a>
+              <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("settings")} > Settings</a>
+
               {/* <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("/plan")} > Plans</a>
               <a href="#" className="text-gray-400 hover:text-gray-200" onClick={() => toggle("/subscription")} > Subscription</a> */}
             </nav>
-            {user && (
-              <nav className="space-x-2">
-                <a className="text-white ">{user.email}</a>
-                <button className="text-white ml-4" onClick={handleLogout}>Logout</button>
-              </nav>
-            )}
-          </div>
+          )}
+          {user && (
+            <nav className="space-x-2">
+              <a className="text-white ">{user.email}</a>
+              <button className="text-white ml-4" onClick={handleLogout}>Logout</button>
+            </nav>
+          )}
         </header>
 
         {/* show login if user not login and accessing path not in publicPathList */}
