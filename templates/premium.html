@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="premium bg-gray-50 py-16">
+    <div class="container mx-auto px-4">
+        <!-- <h1 class="text-4xl font-bold mb-8 text-center text-gray-800">Premium Membership</h1> -->
+        
+        <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden transform transition-all hover:shadow-xl">
+            <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-8 text-center">
+                <h2 class="text-3xl font-bold">Premium Membership</h2>
+                <p class="text-xl mt-3 opacity-90">Only 88¥ per year</p>
+            </div>
+            
+            <div class="p-8">            
+                <h3 class="text-2xl font-semibold mb-6 text-gray-800">Premium Benefits:</h3>
+                <ul class="space-y-4">
+                    <li class="flex items-start">
+                        <span class="text-green-500 mr-3">✓</span>
+                        <span class="text-lg text-gray-700">Complete reading history archive</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-green-500 mr-3">✓</span>
+                        <span class="text-lg text-gray-700">Advanced vocabulary management</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-green-500 mr-3">✓</span>
+                        <span class="text-lg text-gray-700">Enhanced translation features</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-green-500 mr-3">✓</span>
+                        <span class="text-lg text-gray-700">Priority customer support</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-green-500 mr-3">✓</span>
+                        <span class="text-lg text-gray-700">Ad-free experience</span>
+                    </li>
+                </ul>
+                
+                <div class="mt-10 text-center">
+                    <a href="payment.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg transition duration-300 text-lg inline-block shadow-md hover:shadow-lg transform hover:translate-y-[-2px]">
+                        Subscribe Now
+                    </a>
+                </div>
+                
+                <div class="mt-6 text-center text-sm text-gray-500">
+                    <p>Secure payment processing. Cancel anytime.</p>
+                </div>
+            </div>
+            
+            <div class="bg-gray-50 p-8 border-t">
+                <h3 class="text-xl font-semibold mb-5 text-gray-800">Frequently Asked Questions</h3>
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-medium text-lg text-gray-800">How will I access premium features?</h4>
+                        <p class="text-gray-600 mt-1">After payment, your account will be upgraded immediately and you'll have access to all premium features.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-medium text-lg text-gray-800">Can I cancel my subscription?</h4>
+                        <p class="text-gray-600 mt-1">Yes, you can cancel your subscription at any time from your account settings.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-medium text-lg text-gray-800">Is there a refund policy?</h4>
+                        <p class="text-gray-600 mt-1">We offer a 7-day money-back guarantee if you're not satisfied with the premium features.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

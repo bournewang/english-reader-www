@@ -52,39 +52,30 @@
 </header>
     <div class="content">
         
-<section class="install">
-    <div class="container">
-        <h2 class="text-3xl font-bold mb-4">How to Install</h2>
-        <ol class="list-decimal list-inside">
-            <li>Click the button below to go to the Chrome Web Store.</li>
-            <li>Click "Add to Chrome" to install the extension.</li>
-            <li>Follow the on-screen instructions to complete the installation.</li>
-
-            <li><h2>Download & Install Manually</h2>
-                <p>Step 1: Download the Extension Files
-                    Make sure you have the extension files on your local computer. These should include a manifest file and any other required files (HTML, JavaScript, CSS, images, etc.).</p>
+<section class="payment-success bg-gray-50 py-16">
+    <div class="container mx-auto px-4">
+        <div class="max-w-md mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="p-8 text-center">
+                <div class="mb-6">
+                    <svg class="h-16 w-16 text-green-500 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
                 
-                <p>Step 2: Open Chrome Extensions Page
-                    Open Google Chrome.
-                    Click on the three vertical dots (menu) in the upper-right corner of the browser.
-                    Select "More tools" > "Extensions".
-                    Alternatively, you can navigate directly to chrome://extensions/ in the address bar.</p>
-                <p>Step 3: Enable Developer Mode
-                    On the Extensions page, toggle the switch in the top-right corner labeled "Developer mode" to enable it.</p>
-                <p>Step 4: Load Unpacked Extension
-                    Once Developer mode is enabled, you will see three new buttons: "Load unpacked", "Pack extension", and "Update".
-                    Click on "Load unpacked".
-                    A file dialog will open. Navigate to the directory where your extension files are located and select the folder.
-                    Click "Select Folder" (or "Open" on macOS).</p>
-                <p>Step 5: Verify the Extension
-                    The extension should now appear in the list on the Extensions page.
-                    Make sure there are no errors. If there are, they will be indicated in red. Click on the "Errors" link to see detailed information and debug.</p>
-                </li>
-        </ol>
-        <br>
-        <div class="flex">
-            <a href="https://chromewebstore.google.com/detail/english-reader/plipgafgeeplbfgpjednfhfbcjdeeejk" target="_blank" class="mt-4 btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">Add to Chrome</a>
-            <a href="/static/english-reader.zip?v=1741439877" target="_blank" class="mt-4 btn bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mt-4">Download (& Install Manually)</a>
+                <h1 class="text-2xl font-bold text-gray-800 mb-4">Payment Successful!</h1>
+                <p class="text-gray-600 mb-6">Thank you for subscribing to English Reader Premium. Your account has been upgraded.</p>
+                
+                <div class="mb-6">
+                    <h2 class="text-lg font-semibold mb-2">What's Next?</h2>
+                    <p class="text-gray-600">You now have access to all premium features including complete reading history, advanced vocabulary management, and enhanced translation features.</p>
+                </div>
+                
+                <div class="mt-8">
+                    <a href="/" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300">
+                        Back to Home
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </section>
